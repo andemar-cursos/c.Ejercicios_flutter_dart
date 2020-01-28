@@ -22,7 +22,14 @@ class HomePage extends StatelessWidget{
             Text('Numero de click\'s', style: estiloTexto),
             Text('0', style: estiloTexto)
           ],
-        )),
+        )
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          print('hola mundo');
+        },
+      ),
     );
   }
 }
