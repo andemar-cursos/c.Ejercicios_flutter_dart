@@ -29,14 +29,24 @@ class _ContadorPageState extends State<ContadorPage> {
         ],
       )),
       //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, <-- Widget change position button
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          setState((){
-            _conteo++;
-          });
-        },
-      ),
+      floatingActionButton: _crearBotones(),
+    );
+  }
+
+  Widget _crearBotones() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        //Widget que hace la separacion en una lista
+        SizedBox(width: 30),
+        FloatingActionButton(child: Icon(Icons.exposure_zero), onPressed: (){}),
+        //El expanded, hace que se separe lo maximo posible
+        Expanded(child: SizedBox()),
+        FloatingActionButton(child: Icon(Icons.remove), onPressed: (){}),
+        //Separaacion de 10px
+        SizedBox(width: 10),
+        FloatingActionButton(child: Icon(Icons.add), onPressed: (){}),
+      ],
     );
   }
 }
