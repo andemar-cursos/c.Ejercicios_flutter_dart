@@ -24,6 +24,7 @@ class HomePage extends StatelessWidget{
           ],
         )
       ),
+      //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat, <-- Widget change position button
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
