@@ -1,3 +1,4 @@
+import 'package:componentes/src/pages/home_tmp.dart';
 import 'package:flutter/material.dart';
  
 void main() => runApp(MyApp());
@@ -12,11 +13,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: Text('Componentes app'),
         ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
-          ),
-        ),
+        body: HomePageTemp()
       ),
     );
   }
