@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:componentes/src/providers/menu_provider.dart';
 //Utilidades
 import 'package:componentes/src/utils/icono_string_util.dart';
+//Paginas
+import 'package:componentes/src/pages/alert_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -32,8 +34,8 @@ class HomePage extends StatelessWidget {
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot){
         //Se retorna un ListView
         return ListView(
-          //Se crea la lista con los datos del snapshot
-          children: _listaItems(snapshot.data),
+          //Se crea la lista con los datos del snapshot y el context
+          children: _listaItems(snapshot.data, context),
         );
 
       },
@@ -41,7 +43,7 @@ class HomePage extends StatelessWidget {
   }
 
   //Se cre un metodo con la lista de datos
-  List<Widget> _listaItems(List<dynamic> data) {
+  List<Widget> _listaItems(List<dynamic> data, context) {
     //variable que contendra los datos
     final List<Widget> opciones = [];
 
@@ -51,7 +53,16 @@ class HomePage extends StatelessWidget {
         title: Text(opt['texto']),
         leading: getIcon(opt['icon']),
         trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blue),
-        onTap: () {},
+        onTap: () {
+          //Este route, indica la pagina a dirigir.
+          final route = MaterialPageRoute(
+            //Este builder obtiene el contexto actual y la pagina a dirigir.
+            builder: (context) => AlertPage(),
+          );
+
+          //Metodo qu recibe el contexto y el route a dirigir.
+          Navigator.push(context, route);
+        },
       );
       
       opciones..add(widgetTemp)
