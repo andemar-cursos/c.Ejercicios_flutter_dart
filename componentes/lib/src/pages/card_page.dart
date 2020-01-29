@@ -15,6 +15,7 @@ class CardPage extends StatelessWidget {
           //Se indica la separacion entre card's
           SizedBox(height: 30.0),
           _cardTipo2(),
+          SizedBox(height: 30.0),
         ],
       ),
     );
@@ -24,6 +25,10 @@ class CardPage extends StatelessWidget {
   Widget _cardTipo1(){
     
     return Card(
+      //Se "eleva" la tarjeta y la proyeccion de la sombra se agranda
+      elevation: 10.0,
+      //Indica la intencidad del radio, en las esquinas de la tarjeta
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       child: Column(
         children: <Widget>[
           ListTile(
@@ -52,8 +57,9 @@ class CardPage extends StatelessWidget {
   
   //Metodo para crear una tarjeta tipo2
   Widget _cardTipo2(){
-
-    return Card(
+    
+    final card = Container(
+      //clipBehavior: Clip.antiAlias,
       child: Column(
         children: <Widget>[
           //Este widget permite agregar un placeholder, mientras carga la imagen
@@ -63,9 +69,9 @@ class CardPage extends StatelessWidget {
             //Duracion de la animacion entre placeholder-imagen
             fadeInDuration: Duration(milliseconds: 200),
             //Altura de la imagen, respecto al Card
-            height: 216,
+            height: 300,
             //Se indica a la imagen, como debe ocupar el espacio
-            fit: BoxFit.cover,
+            fit: BoxFit.fitHeight,
           ),
           //Contenedor para el text y aplicar la propiedad padding a este
           Container(
@@ -73,6 +79,37 @@ class CardPage extends StatelessWidget {
             child: Text('F por los bordes redondeados')
           ),
         ],
+      ),
+    );
+
+    //Al crear la tarjeta (en este caso un container) se emplea otro container
+    //para darle estilo (sombra, radio, color, etc..) al container con la info.
+    return Container(
+      //Se crea un widget con las decoraciones que contendra el container
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.white,
+        //Sombra (elevation) del container
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            //Se expecifica su color y opacidad (numero)
+            color: Colors.black26,
+            //Difuminado de la sombra
+            blurRadius: 10.0,
+            //alcance de la sombra
+            spreadRadius: 2.0,
+            //Posicion de la sombra (x, y)
+            offset: Offset(2.0, 10.0)
+          )
+        ]
+        //color: Colors.red,
+      ),
+      //Este widget nos permite cortar lo que este exterior al contenedor
+      child: ClipRRect(
+        //Se indic el radio el cual cortara el contenedor
+        borderRadius: BorderRadius.circular(30.0),
+        //El cotenedor
+        child: card,
       ),
     );
   }
