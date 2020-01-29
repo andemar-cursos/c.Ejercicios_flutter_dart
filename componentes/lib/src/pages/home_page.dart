@@ -5,7 +5,6 @@ import 'package:componentes/src/providers/menu_provider.dart';
 //Utilidades
 import 'package:componentes/src/utils/icono_string_util.dart';
 //Paginas
-import 'package:componentes/src/pages/alert_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -54,14 +53,7 @@ class HomePage extends StatelessWidget {
         leading: getIcon(opt['icon']),
         trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blue),
         onTap: () {
-          //Este route, indica la pagina a dirigir.
-          final route = MaterialPageRoute(
-            //Este builder obtiene el contexto actual y la pagina a dirigir.
-            builder: (context) => AlertPage(),
-          );
-
-          //Metodo qu recibe el contexto y el route a dirigir.
-          Navigator.push(context, route);
+          Navigator.pushNamed(context, opt["ruta"]);
         },
       );
       
