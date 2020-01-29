@@ -24,7 +24,7 @@ class _ContadorPageState extends State<ContadorPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         //Lista de widget que contendra la columna
         children: <Widget>[
-          Text('Numero de click\'s', style: _estiloTexto),
+          Text('Numero de tap\'s', style: _estiloTexto),
           Text('$_conteo', style: _estiloTexto)
         ],
       )),
@@ -39,14 +39,27 @@ class _ContadorPageState extends State<ContadorPage> {
       children: <Widget>[
         //Widget que hace la separacion en una lista
         SizedBox(width: 30),
-        FloatingActionButton(child: Icon(Icons.exposure_zero), onPressed: (){}),
+        FloatingActionButton(child: Icon(Icons.exposure_zero), onPressed: _reset),
         //El expanded, hace que se separe lo maximo posible
         Expanded(child: SizedBox()),
-        FloatingActionButton(child: Icon(Icons.remove), onPressed: (){}),
+        FloatingActionButton(child: Icon(Icons.remove), onPressed: _sustraer),
         //Separaacion de 10px
         SizedBox(width: 10),
-        FloatingActionButton(child: Icon(Icons.add), onPressed: (){}),
+        FloatingActionButton(child: Icon(Icons.add), onPressed: _agregar),
       ],
     );
   }
+
+  void _agregar(){
+    setState(() => _conteo++);
+  }
+
+  void _sustraer(){
+    setState(() => _conteo--);
+  }
+
+  void _reset(){
+    setState(() => _conteo = 0);
+  }
+
 }
