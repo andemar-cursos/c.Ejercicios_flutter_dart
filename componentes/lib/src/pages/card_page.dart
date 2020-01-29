@@ -12,6 +12,9 @@ class CardPage extends StatelessWidget {
         padding: EdgeInsets.all(10.0),
         children: <Widget>[
           _cardTipo1(),
+          //Se indica la separacion entre card's
+          SizedBox(height: 30.0),
+          _cardTipo2(),
         ],
       ),
     );
@@ -47,6 +50,32 @@ class CardPage extends StatelessWidget {
   }
 
   
+  //Metodo para crear una tarjeta tipo2
+  Widget _cardTipo2(){
+
+    return Card(
+      child: Column(
+        children: <Widget>[
+          //Este widget permite agregar un placeholder, mientras carga la imagen
+          FadeInImage(
+            image: NetworkImage("https://images2.alphacoders.com/689/689248.jpg"),
+            placeholder: AssetImage("assets/loading.gif"),
+            //Duracion de la animacion entre placeholder-imagen
+            fadeInDuration: Duration(milliseconds: 200),
+            //Altura de la imagen, respecto al Card
+            height: 216,
+            //Se indica a la imagen, como debe ocupar el espacio
+            fit: BoxFit.cover,
+          ),
+          //Contenedor para el text y aplicar la propiedad padding a este
+          Container(
+            padding: EdgeInsets.all(7.0),
+            child: Text('F por los bordes redondeados')
+          ),
+        ],
+      ),
+    );
+  }
 
 
 

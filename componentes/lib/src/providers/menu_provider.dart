@@ -7,9 +7,7 @@ class _MenuProvider{
 
   List<dynamic> opciones = [];
 
-  _MenuProvider(){
-    
-  }
+  _MenuProvider();
 
   //Se crea un metodo con retorno future
   Future<List<dynamic>> cargarData() async{
