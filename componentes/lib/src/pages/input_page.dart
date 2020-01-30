@@ -157,6 +157,8 @@ class _InputPageState extends State<InputPage> {
     // widget que despliega el widget calendario
     DateTime pick = await showDatePicker(
       context: context,
+      //Se selecciona el idioma. -> Este debe configurarse en el pubspec.yaml y main.
+      locale: Locale('es'),
       //Fecha que se mostrara por defecto
       initialDate: new DateTime.now(),
       //Fecha minima
