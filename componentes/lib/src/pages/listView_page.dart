@@ -60,21 +60,40 @@ class _ListaPageState extends State<ListaPage> {
 
 
   Widget _crearLista(){
-    return ListView.builder(
-      //Se crea una instancia del controlador del ListView
-      controller: _scrollController,
-      //Se indica el tamano del ListView
-      itemCount: _listaNumeros.length,
-      itemBuilder: (context, index){
-        //Esto obtiene el numero del arreglo
-        final imagen = _listaNumeros[index];
-        return FadeInImage(
-          image: NetworkImage('https://picsum.photos/500/300/?image=$imagen'),
-          placeholder: AssetImage("assets/loading.gif"),
-        );
-      },
+    return RefreshIndicator(
+
+        onRefresh: _obtenerPagina1,
+
+        child: ListView.builder(
+        //Se crea una instancia del controlador del ListView
+        controller: _scrollController,
+        //Se indica el tamano del ListView
+        itemCount: _listaNumeros.length,
+        itemBuilder: (context, index){
+          //Esto obtiene el numero del arreglo
+          final imagen = _listaNumeros[index];
+          return FadeInImage(
+            image: NetworkImage('https://picsum.photos/500/300/?image=$imagen'),
+            placeholder: AssetImage("assets/loading.gif"),
+          );
+        },
+      ),
     );
   }
+
+
+  Future<Null> _obtenerPagina1() async{
+    final duration = new Duration(seconds: 2);
+    new Timer(duration, (){
+      _listaNumeros.clear();
+      _ultimoItem++;
+      _agregar10();
+       
+    });
+
+    return Future.delayed(duration);
+  }
+
 
   //Metodo que agrega 10 elemento mas a la lista
   void _agregar10(){
