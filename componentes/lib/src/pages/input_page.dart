@@ -8,6 +8,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
 
   String _nombre = '';
+  String _email = '';
+  String _pass  = '';
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,10 @@ class _InputPageState extends State<InputPage> {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         children: <Widget>[
           _crearInput(),
+          Divider(),
+          _crearEmail(),
+          Divider(),
+          _crearPassword(),
           Divider(),
           _crearPersona(),
         ],
@@ -61,16 +67,65 @@ class _InputPageState extends State<InputPage> {
   }
 
 
+  Widget _crearEmail(){
+    return TextField(
+      //Esto hace que el teclado del dispositivo, sea de tipo email.
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20)
+        ),
+        //texto sugerido al interior del input
+        hintText: 'Email',
+        //Texto encima del input
+        labelText: 'Email',
+        //Icono al interior del input -> Lado derecho
+        suffixIcon: Icon(Icons.alternate_email),
+        //Icono al exterior del input -> lado izq
+        icon: Icon(Icons.email),
+      ),
+      //Este widget obtiene el valor ingresado por el usuario
+      onChanged: (data){
+        //Redibuja el widget, por cada letra que se escriba en el inputs
+        setState(() =>  _email = data);
+      },
+    );
+  }
+  
 
-  Widget _crearPersona(){
-
-    return ListTile(
-      title: Text('Nombre es : $_nombre'),      
+  Widget _crearPassword(){
+    return TextField(
+      //Esto hace que la info se vea con puntos negros
+      obscureText: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20)
+        ),
+        //texto sugerido al interior del input
+        hintText: 'Password',
+        //Texto encima del input
+        labelText: 'Password',
+        //Icono al interior del input -> Lado derecho
+        suffixIcon: Icon(Icons.lock),
+        //Icono al exterior del input -> lado izq
+        icon: Icon(Icons.lock),
+      ),
+      //Este widget obtiene el valor ingresado por el usuario
+      onChanged: (data){
+        //Redibuja el widget, por cada letra que se escriba en el inputs
+        setState(() =>  _pass = data);
+      },
     );
   }
 
 
+  Widget _crearPersona(){
 
+    return ListTile(
+      title: Text('Nombre es : $_nombre'), 
+      subtitle: Text('Email es: $_email'),
+    );
+  }
 
 
 }
