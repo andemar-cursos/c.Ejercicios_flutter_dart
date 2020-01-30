@@ -12,6 +12,9 @@ class _InputPageState extends State<InputPage> {
   String _pass  = '';
   String _fecha = '';
 
+  String _opcionSeleccionada = 'Volar';
+  List<String> _superPoderes = ['Volar', 'Rayos X', 'Super aliento', 'Super fuerza'];
+
   TextEditingController _inputFieldDateController = new TextEditingController();
 
   @override
@@ -30,6 +33,8 @@ class _InputPageState extends State<InputPage> {
           _crearPassword(),
           Divider(),
           _crearFecha(context),
+          Divider(),
+          _crearDropDown(),
           Divider(),
           _crearPersona(),
         ],
@@ -177,11 +182,58 @@ class _InputPageState extends State<InputPage> {
     }
   }
 
+
+  //ComboBox
+  Widget _crearDropDown(){
+    return Row(
+      children: <Widget>[
+        //Se le anade el icono
+        Icon(Icons.select_all),
+        //La separacion entre el icono y el comboBox
+        SizedBox(width: 30.0),
+        //Se hace que el comboBox ocupe todo el ancho
+        Expanded(
+            child: DropdownButton(
+            //Aparece un valor por defecto
+            value: _opcionSeleccionada,
+            //Es la lista de datos a mostrar
+            items: _getOpcionesDropDown(),
+            
+            onChanged: (data){
+              _opcionSeleccionada = data;
+            },
+          ),
+        )
+      ],
+    );
+  }
+
+  
+  List<DropdownMenuItem<String>> _getOpcionesDropDown(){
+    
+    List<DropdownMenuItem<String>> lista = new List();
+    //Se recorre la lista
+    _superPoderes.forEach((poder){
+      //Se agrega cada poder a la nueva lista
+      lista.add(DropdownMenuItem(
+        //Muestra el texto
+        child: Text(poder),
+        //Muestra el texto, pero en texto
+        value: poder,
+      ));
+    });
+
+    return lista;
+  }
+
+
+
   Widget _crearPersona(){
 
     return ListTile(
       title: Text('Nombre es : $_nombre'), 
       subtitle: Text('Email es: $_email'),
+      trailing: Text('SuperPoder es: $_opcionSeleccionada'),
     );
   }
 
