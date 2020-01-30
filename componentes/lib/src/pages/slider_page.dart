@@ -10,6 +10,7 @@ class SliderPage extends StatefulWidget {
 class _SliderPageState extends State<SliderPage> {
 
   double _valorSlider = 0.0;
+  bool _bloquearCheck = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,8 @@ class _SliderPageState extends State<SliderPage> {
         child: Column(
           children: <Widget>[
             _crearSlider(),
+            _crearCheckBox(),
+            _crearSwitch(),
             //Este expanded se usa para que la imagen ocupe el resto de la pantalla
             Expanded(child: _crearImagen()),
           ],
@@ -47,11 +50,52 @@ class _SliderPageState extends State<SliderPage> {
       //El valor maximo
       max: 100.0,
       //El data, trae el valor seleccionado por el suario
-      onChanged: (data){
+      // Si _bloq == true, null, si no, que se habilite.
+      onChanged: (_bloquearCheck) ? null : (data){
         setState(() => _valorSlider = data);
       },
     );
   }
+
+
+  Widget _crearCheckBox(){
+    
+    //De esta manera solo se crea el checkbox 
+    /* return Checkbox(
+      value: _bloquearCheck,
+      onChanged: (data){
+        setState(() {
+           _bloquearCheck = data;
+        });
+      },
+    ); */
+
+    //De esta otra, se crea con un campo de texto
+    return CheckboxListTile(
+      title: Text("Bloquear slider"),
+      value: _bloquearCheck,
+      onChanged: (data){
+        setState(() {
+           _bloquearCheck = data;
+        });
+      },
+    );
+
+  }
+
+  //Tiene exatamente los mismos widget de checkbox, solo cambia el nombre (SwitchListTile)
+  Widget _crearSwitch(){
+   return SwitchListTile(
+      title: Text("Bloquear slider"),
+      value: _bloquearCheck,
+      onChanged: (data){
+        setState(() {
+           _bloquearCheck = data;
+        });
+      },
+    ); 
+  }
+
 
   Widget _crearImagen(){
 
@@ -63,7 +107,6 @@ class _SliderPageState extends State<SliderPage> {
       fit: BoxFit.contain,
     );
   }
-
 
 
 
