@@ -1,7 +1,5 @@
 //Terceros
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-
  //Paginas
 import 'package:peliculas/src/pages/home_page.dart';
 
@@ -17,7 +15,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/'   :   (BuildContext context) => home_page(),
       }
-
     );
   }
 }
