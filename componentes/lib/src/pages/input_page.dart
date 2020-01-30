@@ -10,6 +10,9 @@ class _InputPageState extends State<InputPage> {
   String _nombre = '';
   String _email = '';
   String _pass  = '';
+  String _fecha = '';
+
+  TextEditingController _inputFieldDateController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,8 @@ class _InputPageState extends State<InputPage> {
           _crearEmail(),
           Divider(),
           _crearPassword(),
+          Divider(),
+          _crearFecha(context),
           Divider(),
           _crearPersona(),
         ],
@@ -118,6 +123,57 @@ class _InputPageState extends State<InputPage> {
     );
   }
 
+
+  Widget _crearFecha(context){
+    return TextField(
+      //Esto evita que el usuario pueda seleccionar el texto y
+      //eliminarlo, cambiarlo o pegarlo en el field.
+      enableInteractiveSelection: true,
+      //Esto guarda la instancia del TextField en una variable
+      controller: _inputFieldDateController,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20)
+        ),
+        //texto sugerido al interior del input
+        hintText: 'Fecha de nacimiento',
+        //Texto encima del input
+        labelText: 'Fecha de nacimiento',
+        //Icono al interior del input -> Lado derecho
+        suffixIcon: Icon(Icons.calendar_today),
+        //Icono al exterior del input -> lado izq
+        icon: Icon(Icons.perm_contact_calendar),
+      ),
+      onTap: (){
+        //Esto hace que no se pueda hace focus (seleccionar) el input
+        FocusScope.of(context).requestFocus(new FocusNode());
+        _selectDate(context);
+      },
+    );
+  }
+
+  //Se debe de crear un future, para esperar la respuesta del usuario
+  _selectDate(context) async{
+    // widget que despliega el widget calendario
+    DateTime pick = await showDatePicker(
+      context: context,
+      //Fecha que se mostrara por defecto
+      initialDate: new DateTime.now(),
+      //Fecha minima
+      firstDate: new DateTime(2020),
+      //Fecha maxima
+      lastDate: new DateTime(2030),
+    );
+
+    if(pick != null){
+      setState(() {
+        //Retorna la fecha seleccionada en String
+        _fecha = pick.toString();
+        //Se cambia el text del fieldData con _fecha del usuario.
+        _inputFieldDateController.text = _fecha;
+      });
+    }
+  }
 
   Widget _crearPersona(){
 
