@@ -1,4 +1,5 @@
 //Terceros
+import 'package:componentes/src/pages/listView_page.dart';
 import 'package:flutter/material.dart';
 //Paginas
 import 'package:componentes/src/pages/alert_page.dart';
@@ -18,6 +19,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
   'card'              : (BuildContext context) => CardPage(),
   'animatedContainer' : (BuildContext context) => AnimatedContainerPage(),
   'inputs'            : (BuildContext context) => InputPage(),
-  'Slider'              : (BuildContext context) => SliderPage(),
+  'Slider'            : (BuildContext context) => SliderPage(),
+  'list'              : (BuildContext contect) => ListaPage(),
   };
 }
