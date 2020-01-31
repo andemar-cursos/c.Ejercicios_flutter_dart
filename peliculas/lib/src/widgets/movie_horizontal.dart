@@ -50,76 +50,44 @@ class MovieHorizontal extends StatelessWidget {
   }
 
   Widget _tarjeta(context, pelicula){
-    return Container(
-        //Para que cada tarjeta tenga 15px de espacio en la derecha
-        margin: EdgeInsets.only(right: 15.0),
-        child: Column(
-          children: <Widget>[
-            //Esto se hace para recortar las esquinas
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: FadeInImage(
-                //Imagfen de la pelicula
-                image: NetworkImage(pelicula.getPosterImg()),
-                //Placeholder mientras carga
-                placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),
-                //Ocupar todo el espacio del container
-                fit: BoxFit.cover,
-                //Esta es la altura del Fade
-                height: 150.0,
-              ),
+    
+    final tarjeta = Container(
+      //Para que cada tarjeta tenga 15px de espacio en la derecha
+      margin: EdgeInsets.only(right: 15.0),
+      child: Column(
+        children: <Widget>[
+          //Esto se hace para recortar las esquinas
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: FadeInImage(
+              //Imagfen de la pelicula
+              image: NetworkImage(pelicula.getPosterImg()),
+              //Placeholder mientras carga
+              placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),
+              //Ocupar todo el espacio del container
+              fit: BoxFit.cover,
+              //Esta es la altura del Fade
+              height: 150.0,
             ),
-            SizedBox(height: 5.0,),
-            Text(
-              //Este es el texto
-              pelicula.title,
-              //Esto permite colocar 3 puntos (...) cuando es muy largo
-              overflow: TextOverflow.ellipsis,
-              //Esto le da el estilo de la app
-              style: Theme.of(context).textTheme.caption,
-            ),
-          ],
-        ),
-      );
-  }
+          ),
+          SizedBox(height: 5.0,),
+          Text(
+            //Este es el texto
+            pelicula.title,
+            //Esto permite colocar 3 puntos (...) cuando es muy largo
+            overflow: TextOverflow.ellipsis,
+            //Esto le da el estilo de la app
+            style: Theme.of(context).textTheme.caption,
+          ),
+        ],
+      ),
+    );
 
-
-  List<Widget> _tarjetas(context){
-    //Se hace un map, que recorre las peliculas y crea un container en cada una
-    return peliculas.map((pelicula) {
-      
-      return Container(
-        //Para que cada tarjeta tenga 15px de espacio en la derecha
-        margin: EdgeInsets.only(right: 15.0),
-        child: Column(
-          children: <Widget>[
-            //Esto se hace para recortar las esquinas
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: FadeInImage(
-                //Imagfen de la pelicula
-                image: NetworkImage(pelicula.getPosterImg()),
-                //Placeholder mientras carga
-                placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),
-                //Ocupar todo el espacio del container
-                fit: BoxFit.cover,
-                //Esta es la altura del Fade
-                height: 150.0,
-              ),
-            ),
-            SizedBox(height: 5.0,),
-            Text(
-              //Este es el texto
-              pelicula.title,
-              //Esto permite colocar 3 puntos (...) cuando es muy largo
-              overflow: TextOverflow.ellipsis,
-              //Esto le da el estilo de la app
-              style: Theme.of(context).textTheme.caption,
-            ),
-          ],
-        ),
-      );
-
-    }).toList();
+    return GestureDetector(
+      child: tarjeta,
+      onTap: (){
+        Navigator.pushNamed(context, 'detalle', arguments: pelicula);
+      },
+    );
   }
 }
