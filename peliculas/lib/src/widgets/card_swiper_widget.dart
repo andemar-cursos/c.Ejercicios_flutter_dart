@@ -35,7 +35,7 @@ class CardSwiper extends StatelessWidget {
               //La imagen viene en la pelicula
               image: NetworkImage(peliculas[index].getPosterImg()),
               //Mientras carga, se usa una imagen guardada en memoria
-              placeholder: AssetImage('lib/src/assets/img/loading.gif'),
+              placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),
               //Se usa para que la imagen ocupe todo el espacio
               fit: BoxFit.cover,
             )

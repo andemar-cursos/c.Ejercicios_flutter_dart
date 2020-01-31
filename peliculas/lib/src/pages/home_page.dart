@@ -1,10 +1,8 @@
 //terceros
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:peliculas/src/providers/peliculas_providers.dart';
 import 'package:peliculas/src/widgets/card_swiper_widget.dart';
 //Widget personalizado
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:peliculas/src/widgets/movie_horizontal.dart';
 
 class home_page extends StatelessWidget {
@@ -56,7 +54,8 @@ class home_page extends StatelessWidget {
         }else{
           //Si no tiene, retorna un gif de carga
           return Container(
-            height: 400.0,
+            //Este es el tamano del card_swiper
+            height: 341.0,
             child: Center(
               child: CircularProgressIndicator()
             ),
