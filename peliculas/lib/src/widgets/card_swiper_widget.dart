@@ -1,10 +1,12 @@
 //Terceros
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:peliculas/src/models/pelicula_model.dart';
 
 class CardSwiper extends StatelessWidget {
 
-  final List<dynamic> peliculas;
+  //Listado de peliculas
+  final List<Pelicula> peliculas;
 
   //Con el decorador, se obliga a mandar la lista de peliculas
   CardSwiper({ @required this.peliculas});
@@ -29,9 +31,17 @@ class CardSwiper extends StatelessWidget {
           //Esto es para recortar las esquinas
           return ClipRRect(
             borderRadius: BorderRadius.circular(30),
-            child: Image.network("https://somoskudasai.com/wp-content/uploads/2019/12/ZThmZqX.jpg",fit: BoxFit.cover,),
+            child: FadeInImage(
+              //La imagen viene en la pelicula
+              image: NetworkImage(peliculas[index].getPosterImg()),
+              //Mientras carga, se usa una imagen guardada en memoria
+              placeholder: AssetImage('lib/src/assets/img/loading.gif'),
+              //Se usa para que la imagen ocupe todo el espacio
+              fit: BoxFit.cover,
+            )
           );
         },
+        //Este es el numero de tarjetas que se crearan
         itemCount: peliculas.length,
         //Esto despliega la paginacion inferior
         //pagination: new SwiperPagination(),

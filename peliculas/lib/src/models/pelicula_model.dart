@@ -71,4 +71,12 @@ class Pelicula {
     releaseDate       = json['release_date'];  
   } 
 
+  getPosterImg(){
+    //Si no hay poster, retorna una imagen por defeceto
+    if(posterPath == null){
+      return 'https://www.itl.cat/pngfile/big/156-1567134_use-d20-code-to-apply-this-offer-available.png';
+    }
+    return 'https://image.tmdb.org/t/p/w500/$posterPath';
+  }
+
 }
