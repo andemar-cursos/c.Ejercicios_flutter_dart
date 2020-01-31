@@ -13,6 +13,9 @@ class PeliculasProviders{
   String _url       = 'api.themoviedb.org';
   String _language  = 'es-ES';
 
+  //banderas de carga
+  bool _cargando = false;
+
   List<Pelicula> _populares = new List();
 
   //Indica la pagina de resultado que traera
@@ -68,6 +71,11 @@ class PeliculasProviders{
   //Metodo que retorna una lista de peliculas (actuales en cines)
   Future<List<Pelicula>> getPopulares() async{
 
+    //Bandera -> Esto permitira carga 1 sola vez en cada momento, las popularMovies
+    //Si ya se esta cargando una, retorna vacio.
+    if(_cargando) return [];
+    _cargando = true;
+
     _popularesPage++;
 
     //De esta manera hace la url de endpoint del servicio
@@ -84,6 +92,9 @@ class PeliculasProviders{
     _populares.addAll(resp);
     //Se envia la lista completa por el stream
     popularesSink(_populares);
+
+    //bandera -> Al finalizar de cargar, vuele false la bandera, para permitir otra consulta
+    _cargando = false;
     //retorna la respuesta obtenida (no la lista completa)
     return resp;
   }

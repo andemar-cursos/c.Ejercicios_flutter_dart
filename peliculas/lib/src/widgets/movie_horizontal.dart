@@ -36,13 +36,51 @@ class MovieHorizontal extends StatelessWidget {
     return Container(
       //El alto sera el 20% de la pantalla
       height: _screenSize.height * 0.2,
-      child: PageView(
+      //Con el pageView.builder, se renderiza las tarjetas, cuando son necesarias.
+      child: PageView.builder(
         //Evita que la pagina tenga efecto de iman
         pageSnapping: false,
         controller: _pageController,
-        children: _tarjetas(context),
+        //Se le pasa el tamano a renderizar
+        itemCount: peliculas.length,
+        //Y se pasa un widget encargado de la obtencion de cada tarjeta individual.
+        itemBuilder: (context, i) => _tarjeta(context, peliculas[i]),
       ),
     );
+  }
+
+  Widget _tarjeta(context, pelicula){
+    return Container(
+        //Para que cada tarjeta tenga 15px de espacio en la derecha
+        margin: EdgeInsets.only(right: 15.0),
+        child: Column(
+          children: <Widget>[
+            //Esto se hace para recortar las esquinas
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: FadeInImage(
+                //Imagfen de la pelicula
+                image: NetworkImage(pelicula.getPosterImg()),
+                //Placeholder mientras carga
+                placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),
+                //Ocupar todo el espacio del container
+                fit: BoxFit.cover,
+                //Esta es la altura del Fade
+                height: 150.0,
+              ),
+            ),
+            SizedBox(height: 5.0,),
+            Text(
+              //Este es el texto
+              pelicula.title,
+              //Esto permite colocar 3 puntos (...) cuando es muy largo
+              overflow: TextOverflow.ellipsis,
+              //Esto le da el estilo de la app
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ],
+        ),
+      );
   }
 
 
