@@ -1,8 +1,12 @@
 class Peliculas{
+
+  //Variables
   List<Pelicula> peliculas = new List();
 
+  //Constructor
   Peliculas();
 
+  //Metodos
   Peliculas.fromJsonList(List<dynamic> jsonList){
 
     if(jsonList == null) return;
@@ -50,8 +54,8 @@ class Pelicula {
 
   Pelicula.fromJsonMap(Map<String, dynamic> json){
     //Esto se hace, para que el valor si lleva entero, lo vuelva double
-    popularity        = json['popularity'] / 1;
-    voteCount         = json['vote_count'] / 1;  
+    popularity        = json['popularity'] / 1.0;
+    voteCount         = json['vote_count'];  
     video             = json['video'];  
     posterPath        = json['poster_path'];   
     id                = json['id']; 
@@ -62,7 +66,7 @@ class Pelicula {
     //Esto es para que vuelva el dato a int
     genreIds          = json['genre_ids'].cast<int>();
     title             = json['title'];  
-    voteAverage       = json['vote_average'];  
+    voteAverage       = json['vote_average'] / 1.0;  
     overview          = json['overview']; 
     releaseDate       = json['release_date'];  
   } 
