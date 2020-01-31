@@ -5,6 +5,7 @@ import 'package:peliculas/src/providers/peliculas_providers.dart';
 import 'package:peliculas/src/widgets/card_swiper_widget.dart';
 //Widget personalizado
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:peliculas/src/widgets/movie_horizontal.dart';
 
 class home_page extends StatelessWidget {
 
@@ -65,20 +66,36 @@ class home_page extends StatelessWidget {
   Widget _footer(context){
 
     return Container(
+      //Se establese el uso total del horizontal
       width: double.infinity,
       child: Column(
+        //Esto se hace para que los widget se pinten al lado izquierdo
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text("populares", style: Theme.of(context).textTheme.subhead,),
-
+          //Se crea un texto, con el thema de la app.
+          Container(
+            //Esto es para que el texto, quede a 20px del lado izq.
+            padding: EdgeInsets.only(left: 20.0),
+            child: Text("populares", style: Theme.of(context).textTheme.subhead,)
+          ),
+          SizedBox(height: 5.0,),
           FutureBuilder(
             future: peliculasProviders.getPopulares(),
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-              
               // &&&&&&&&& EL ? AL LADO DE DATA, EXPECIFICA, SI HAY DATA, SE HACE
               // EL FOREACH, SI NO, NO SE HACE EL FOREACH &&&&&&&&&&&&
-              snapshot.data?.forEach((p) => print(p.title));
-
-              return Container();
+              //snapshot.data?.forEach((p) => print(p.title));
+              if(snapshot.hasData){
+                return MovieHorizontal(peliculas: snapshot.data);
+              }else{
+                return Container(
+                  height: 400.0,
+                  child: Center(
+                    //Esto se hace para que el widget quede en el centro
+                    child: Center(child: CircularProgressIndicator())
+                  ),
+                );
+              }
             },
           ),
         ],
