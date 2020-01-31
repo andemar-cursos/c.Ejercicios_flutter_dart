@@ -3,14 +3,35 @@ import 'package:peliculas/src/models/pelicula_model.dart';
 
 class MovieHorizontal extends StatelessWidget {
 
+  //Funciones
+  final Function siguientePagina;
+
+  //Variables
   final List<Pelicula> peliculas;
 
-  MovieHorizontal({@required this.peliculas});
+  //Controller's
+  final _pageController = new PageController(
+    //Con que pagina inicia
+    initialPage: 1,
+    //Cuantas tarjetas severan al tiempo
+    viewportFraction: 0.3,
+  );
+
+  //Constructor
+  //Obtiene las peliculas actuales, y la funcion la cual agrega las siguientes paginas
+  MovieHorizontal({@required this.peliculas, @required this.siguientePagina});
 
   @override
   Widget build(BuildContext context) {
 
     final _screenSize = MediaQuery.of(context).size;
+
+    _pageController.addListener((){
+      //Si la posicion del scroll es mayor o igual, al maximo - 200pixeles
+      if(_pageController.position.pixels >= _pageController.position.maxScrollExtent - 200){
+        siguientePagina();
+      }
+    });
 
     return Container(
       //El alto sera el 20% de la pantalla
@@ -18,12 +39,7 @@ class MovieHorizontal extends StatelessWidget {
       child: PageView(
         //Evita que la pagina tenga efecto de iman
         pageSnapping: false,
-        controller: PageController(
-          //Con que pagina inicia
-          initialPage: 1,
-          //Cuantas tarjetas severan al tiempo
-          viewportFraction: 0.3,
-        ),
+        controller: _pageController,
         children: _tarjetas(context),
       ),
     );
@@ -43,7 +59,7 @@ class MovieHorizontal extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: FadeInImage(
-                //Imagen de la pelicula
+                //Imagfen de la pelicula
                 image: NetworkImage(pelicula.getPosterImg()),
                 //Placeholder mientras carga
                 placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),

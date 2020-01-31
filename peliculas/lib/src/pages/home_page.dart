@@ -13,6 +13,10 @@ class home_page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    //Se "inicializa" el stream, para obtener los datos
+    peliculasProviders.getPopulares();
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Peliculas en cines'),
@@ -79,14 +83,19 @@ class home_page extends StatelessWidget {
             child: Text("populares", style: Theme.of(context).textTheme.subhead,)
           ),
           SizedBox(height: 5.0,),
-          FutureBuilder(
-            future: peliculasProviders.getPopulares(),
+
+          StreamBuilder(
+            //Esto especifica el stream, el cual recibira los datos
+            stream: peliculasProviders.popularesStream,
             builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
               // &&&&&&&&& EL ? AL LADO DE DATA, EXPECIFICA, SI HAY DATA, SE HACE
               // EL FOREACH, SI NO, NO SE HACE EL FOREACH &&&&&&&&&&&&
               //snapshot.data?.forEach((p) => print(p.title));
               if(snapshot.hasData){
-                return MovieHorizontal(peliculas: snapshot.data);
+                return MovieHorizontal(
+                  peliculas: snapshot.data,
+                  siguientePagina: peliculasProviders.getPopulares,
+                );
               }else{
                 return Container(
                   height: 400.0,
