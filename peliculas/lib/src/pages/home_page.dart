@@ -1,5 +1,6 @@
 //terceros
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:peliculas/src/providers/peliculas_providers.dart';
 import 'package:peliculas/src/widgets/card_swiper_widget.dart';
 //Widget personalizado
@@ -25,8 +26,11 @@ class home_page extends StatelessWidget {
       ),
       body: Container(
         child: Column(
+          //Se crea un espacio entre los  widget's
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             _swiperTarjetas(),
+            _footer(context),
           ],
         ),
       ),
@@ -55,14 +59,33 @@ class home_page extends StatelessWidget {
         }
       }
     );
-
-    
-
-    
   }
 
 
+  Widget _footer(context){
 
+    return Container(
+      width: double.infinity,
+      child: Column(
+        children: <Widget>[
+          Text("populares", style: Theme.of(context).textTheme.subhead,),
+
+          FutureBuilder(
+            future: peliculasProviders.getPopulares(),
+            builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+              
+              // &&&&&&&&& EL ? AL LADO DE DATA, EXPECIFICA, SI HAY DATA, SE HACE
+              // EL FOREACH, SI NO, NO SE HACE EL FOREACH &&&&&&&&&&&&
+              snapshot.data?.forEach((p) => print(p.title));
+
+              return Container();
+            },
+          ),
+        ],
+      ),
+    );
+
+  }
 
 
 

@@ -13,15 +13,7 @@ class PeliculasProviders{
   String _language  = 'es-ES';
 
 
-  //Metodo que retorna una lista de peliculas (actuales en cines)
-  Future<List<Pelicula>> getEnCines() async{
-
-    //De esta manera hace la url de endpoint del servicio
-    final url = Uri.https(_url, '3/movie/now_playing', {
-      'api_key' : _apiKey,
-      'language': _language
-    });
-
+  Future<List<Pelicula>> _procesarRespuesta(Uri url) async{
     //El async sirve, para que obtenga los datos y lo guarde en data y no
     //retorne un Future
     final data = await http.get(url);
@@ -33,6 +25,34 @@ class PeliculasProviders{
 
     //Retorna el arreglo de peliculas
     return peliculas.peliculas;
+  }
+
+  //Metodo que retorna una lista de peliculas (actuales en cines)
+  Future<List<Pelicula>> getEnCines() async{
+
+    //De esta manera hace la url de endpoint del servicio
+    final url = Uri.https(_url, '3/movie/now_playing', {
+      'api_key' : _apiKey,
+      'language': _language
+    });
+
+    //Retorna la resolucion del metodo
+    return await _procesarRespuesta(url);
+  }
+  
+  
+  
+  //Metodo que retorna una lista de peliculas (actuales en cines)
+  Future<List<Pelicula>> getPopulares() async{
+
+    //De esta manera hace la url de endpoint del servicio
+    final url = Uri.https(_url, '3/movie/popular', {
+      'api_key' : _apiKey,
+      'language': _language
+    });
+
+    //Retorna la resolucion del metodo
+    return await _procesarRespuesta(url);
   }
 
 
