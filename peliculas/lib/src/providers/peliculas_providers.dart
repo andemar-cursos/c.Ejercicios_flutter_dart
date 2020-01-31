@@ -1,4 +1,5 @@
 //Terceros
+import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 //modelos
@@ -12,6 +13,28 @@ class PeliculasProviders{
   String _url       = 'api.themoviedb.org';
   String _language  = 'es-ES';
 
+  List<Pelicula> _populares = new List();
+
+  //Indica la pagina de resultado que traera
+  int _popularesPage = 0;
+
+
+  //STREAM
+  //El broadcast sirve para escuchar en varios lugares un solo stream
+  final _popularesStreamController = StreamController<List<Pelicula>>.broadcast();
+
+  //Esto permitira enviara datos mediante el stream
+  Function(List<Pelicula>) get popularesSink => _popularesStreamController.sink.add;
+
+  //Esto permitira la escucha del stream
+  Stream<List<Pelicula>> get popularesStream => _popularesStreamController.stream;
+
+
+
+  void disposeStreams(){
+    //El ? pregunta si existe, si es asi, lo cierra
+    _popularesStreamController?.close();
+  }
 
   Future<List<Pelicula>> _procesarRespuesta(Uri url) async{
     //El async sirve, para que obtenga los datos y lo guarde en data y no
@@ -45,14 +68,24 @@ class PeliculasProviders{
   //Metodo que retorna una lista de peliculas (actuales en cines)
   Future<List<Pelicula>> getPopulares() async{
 
+    _popularesPage++;
+
     //De esta manera hace la url de endpoint del servicio
     final url = Uri.https(_url, '3/movie/popular', {
       'api_key' : _apiKey,
-      'language': _language
+      'language': _language,
+      'page'    : _popularesPage.toString(),
     });
 
-    //Retorna la resolucion del metodo
-    return await _procesarRespuesta(url);
+    //Esta variable, obtiene la lista de peliculas
+    final resp = await _procesarRespuesta(url);
+
+    //Anado las peliculas a la lista (Si ya hay, las agrega al final)
+    _populares.addAll(resp);
+    //Se envia la lista completa por el stream
+    popularesSink(_populares);
+    //retorna la respuesta obtenida (no la lista completa)
+    return resp;
   }
 
 
