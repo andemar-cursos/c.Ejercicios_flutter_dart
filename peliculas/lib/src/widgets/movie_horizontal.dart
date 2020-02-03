@@ -50,7 +50,8 @@ class MovieHorizontal extends StatelessWidget {
   }
 
   Widget _tarjeta(context, Pelicula pelicula){
-    
+
+    pelicula.uniqueId = "${pelicula.id}-poster";
     final tarjeta = Container(
       //Para que cada tarjeta tenga 15px de espacio en la derecha
       margin: EdgeInsets.only(right: 15.0),
@@ -58,7 +59,7 @@ class MovieHorizontal extends StatelessWidget {
         children: <Widget>[
           //Esto se hace para recortar las esquinas
           Hero(
-            tag: pelicula.id,
+            tag: pelicula.uniqueId,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: FadeInImage(

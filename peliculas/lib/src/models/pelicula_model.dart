@@ -20,6 +20,9 @@ class Peliculas{
 
 
 class Pelicula {
+  //Esta variable servira para el animationHero
+  String uniqueId;
+
   double popularity;
   int voteCount;
   bool video;

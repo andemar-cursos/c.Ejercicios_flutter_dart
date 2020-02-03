@@ -28,17 +28,25 @@ class CardSwiper extends StatelessWidget {
         layout: SwiperLayout.STACK,
         //Inserta una imagen al elemento
         itemBuilder: (BuildContext context,int index){
+
+          peliculas[index].uniqueId = "${peliculas[index].id}-card";
           //Esto es para recortar las esquinas
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: FadeInImage(
-              //La imagen viene en la pelicula
-              image: NetworkImage(peliculas[index].getPosterImg()),
-              //Mientras carga, se usa una imagen guardada en memoria
-              placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),
-              //Se usa para que la imagen ocupe todo el espacio
-              fit: BoxFit.cover,
-            )
+          return Hero(
+            tag: peliculas[index].uniqueId,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, 'detalle', arguments: peliculas[index]),
+                child: FadeInImage(
+                  //La imagen viene en la pelicula
+                  image: NetworkImage(peliculas[index].getPosterImg()),
+                  //Mientras carga, se usa una imagen guardada en memoria
+                  placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),
+                  //Se usa para que la imagen ocupe todo el espacio
+                  fit: BoxFit.cover,
+                ),
+              )
+            ),
           );
         },
         //Este es el numero de tarjetas que se crearan
