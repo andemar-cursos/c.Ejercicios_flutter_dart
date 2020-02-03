@@ -9,26 +9,34 @@ class BasicoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          _crearImagen(),
-          _crearTitulo(),
-          _crearAcciones(),
-          _crearTexto(),
-          _crearTexto(),
-          _crearTexto(),
-          _crearTexto(),
-          _crearTexto(),
-          _crearTexto(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            _crearImagen(context),
+            _crearTitulo(),
+            _crearAcciones(),
+            _crearTexto(),
+            _crearTexto(),
+            _crearTexto(),
+            _crearTexto(),
+            _crearTexto(),
+            _crearTexto(),
+          ],
+        ),
       )
     );
   }
 
 
-  Widget _crearImagen(){
-    return Image(
-            image: NetworkImage("https://images4.alphacoders.com/800/800256.png"),
+  Widget _crearImagen(context){
+    double height = MediaQuery.of(context).size.height * 0.308;
+    return Container(
+      height: height,
+      width: double.infinity,
+      child: Image(
+        image: NetworkImage("https://images4.alphacoders.com/800/800256.png"),
+        fit: BoxFit.cover
+      ),
     );
   }
 
