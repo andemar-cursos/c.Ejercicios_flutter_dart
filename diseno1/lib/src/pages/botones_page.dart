@@ -17,7 +17,8 @@ class BotonesPage extends StatelessWidget {
             ),
           )
         ],
-      )
+      ),
+      bottomNavigationBar: _bottonNavigationBar(context),
     );
   }
 
@@ -91,7 +92,29 @@ class BotonesPage extends StatelessWidget {
 
 
 
+  //themes
+  Widget _bottonNavigationBar(context){
 
+    return Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor: Color.fromRGBO(55, 57, 84, 1.0),
+        primaryColor: Colors.pink,
+        textTheme: Theme.of(context).textTheme.copyWith(caption: TextStyle(color: Color.fromRGBO(116, 117, 152, 1.0)))
+      ),
+      child: BottomNavigationBar(
+        items: [
+          _bottom(Icon(Icons.calendar_today,  size: 30.0,)),
+          _bottom(Icon(Icons.bubble_chart,    size: 30.0,)),
+          _bottom(Icon(Icons.supervised_user_circle,size: 30.0,)),
+        ]  
+      ),
 
-
+    );
+  }
+  BottomNavigationBarItem _bottom(Icon icono){
+    return BottomNavigationBarItem(
+      icon: icono,
+      title: Container(),
+    );
+  }
 }
