@@ -13,6 +13,7 @@ class BotonesPage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 _titulos(),
+                _botonesRedondeados(),
               ],
             ),
           )
@@ -91,6 +92,59 @@ class BotonesPage extends StatelessWidget {
   }
 
 
+  Widget _botonesRedondeados(){
+    return Table(
+      children: [
+        TableRow(
+          children: [
+            _crearBotonRedondeado(),
+            _crearBotonRedondeado(),
+          ]
+        ),
+        TableRow(
+          children: [
+            _crearBotonRedondeado(),
+            _crearBotonRedondeado(),
+          ]
+        ),
+        TableRow(
+          children: [
+            _crearBotonRedondeado(),
+            _crearBotonRedondeado(),
+          ]
+        ),
+        TableRow(
+          children: [
+            _crearBotonRedondeado(),
+            _crearBotonRedondeado(),
+          ]
+        ),
+      ],
+    );
+  }
+  Widget _crearBotonRedondeado(){
+    return Container(
+      height: 180,
+      margin: EdgeInsets.all(15.0),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(62, 66, 107, 0.70),
+        borderRadius: BorderRadius.circular(20.0)
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          SizedBox(height: 5.0),
+          CircleAvatar(
+            backgroundColor: Colors.pink,
+            radius: 35.0,
+            child: Icon(Icons.ac_unit, color: Colors.white),
+          ),
+          Text('data', style: TextStyle(color: Colors.pinkAccent)),
+          SizedBox(height: 5.0),
+        ],
+      ),
+    );
+  }
 
   //themes
   Widget _bottonNavigationBar(context){
@@ -117,4 +171,10 @@ class BotonesPage extends StatelessWidget {
       title: Container(),
     );
   }
+
+
+
+
+
+
 }
