@@ -49,7 +49,7 @@ class MovieHorizontal extends StatelessWidget {
     );
   }
 
-  Widget _tarjeta(context, pelicula){
+  Widget _tarjeta(context, Pelicula pelicula){
     
     final tarjeta = Container(
       //Para que cada tarjeta tenga 15px de espacio en la derecha
@@ -57,17 +57,20 @@ class MovieHorizontal extends StatelessWidget {
       child: Column(
         children: <Widget>[
           //Esto se hace para recortar las esquinas
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: FadeInImage(
-              //Imagfen de la pelicula
-              image: NetworkImage(pelicula.getPosterImg()),
-              //Placeholder mientras carga
-              placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),
-              //Ocupar todo el espacio del container
-              fit: BoxFit.cover,
-              //Esta es la altura del Fade
-              height: 150.0,
+          Hero(
+            tag: pelicula.id,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: FadeInImage(
+                //Imagfen de la pelicula
+                image: NetworkImage(pelicula.getPosterImg()),
+                //Placeholder mientras carga
+                placeholder: AssetImage('lib/src/assets/img/no-image.jpg'),
+                //Ocupar todo el espacio del container
+                fit: BoxFit.cover,
+                //Esta es la altura del Fade
+                height: 150.0,
+              ),
             ),
           ),
           SizedBox(height: 5.0,),
