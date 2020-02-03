@@ -1,5 +1,6 @@
 //Para hacer el metodo base se usa 'mateapp'
 import 'package:diseno1/src/pages/basico_page.dart';
+import 'package:diseno1/src/pages/botones_page.dart';
 import 'package:diseno1/src/pages/scroll_page.dart';
 import 'package:flutter/material.dart';
  
@@ -11,10 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Disenos',
-      initialRoute: 'scroll',
+      initialRoute: 'botones',
       routes: {
         'basico'  : (BuildContext context) => BasicoPage(),
         'scroll'  : (BuildContext context) => ScrollPage(),
+        'botones' : (BuildContext context) => BotonesPage(),
       }
     );
   }
