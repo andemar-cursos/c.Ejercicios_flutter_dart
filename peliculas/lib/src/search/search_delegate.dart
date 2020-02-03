@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/pelicula_model.dart';
+import 'package:peliculas/src/providers/peliculas_providers.dart';
 
 class DataSearch extends SearchDelegate{
 
   //Se guarda la seleccion de sugerencias
   //String tituloSeleccion = "";
+
+  final peliculasProviders = new PeliculasProviders();
 
   final peliculas = [
     'spiderman',
@@ -66,26 +70,41 @@ class DataSearch extends SearchDelegate{
   @override
   Widget buildSuggestions(BuildContext context) {
 
-                          //Si el query esta vacio, 
-    final listaSugerida = (query.isEmpty) 
-                          //se muestran las peliculas recientes, si no
-                          ? peliculasRecientes
-                          //obtiene una lista, donde si comienza con el query, se obtiene la pelicula y se muestra
-                          : peliculas.where((p) => p.toLowerCase().startsWith(query.toLowerCase())).toList();
+    if(query.isEmpty){
+      return Container();
+    }
 
-    // Son las sugerencias cuando la persona escribe
-    return ListView.builder(
-      itemCount: listaSugerida.length,
-      itemBuilder: (context, index){
-        return ListTile(
-          leading: Icon(Icons.movie),
-          title: Text(listaSugerida[index]),
-          onTap: (){
-            /* //Esto es para mostrar un widget al momento de seleccionar un resultado en sugerencia
-            tituloSeleccion = listaSugerida[index];
-            showResults(context); */
-          },
-        );
+    return FutureBuilder(
+      future: peliculasProviders.busquedaPelicula(query),
+      builder: (BuildContext context, AsyncSnapshot<List<Pelicula>> snapshot) {
+        if(snapshot.hasData){
+
+          final peliculas = snapshot.data;
+
+          return ListView(
+            children: peliculas.map( (pelicula){
+              return ListTile(
+                leading: FadeInImage(
+                  image: NetworkImage(pelicula.getPosterImg()),
+                  placeholder: AssetImage("lib/src/assets/img/no-image.jpg"),
+                  width: 50.0,
+                  fit: BoxFit.contain
+                ),
+                title: Text(pelicula.title),
+                subtitle: Text(pelicula.originalTitle),
+                onTap: (){
+                  close(context, null);
+                  pelicula.uniqueId = "${pelicula.id}-search";
+                  Navigator.pushNamed(context, "detalle", arguments: pelicula);  
+                },
+              );
+            }).toList(),
+          );
+        }else{
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
       },
     );
   }

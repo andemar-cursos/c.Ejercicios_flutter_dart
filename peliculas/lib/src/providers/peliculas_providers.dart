@@ -118,6 +118,19 @@ class PeliculasProviders{
 
 
 
+  //Metodo de busqueda de peliculas
+  Future<List<Pelicula>> busquedaPelicula(String query) async{
+
+    //De esta manera hace la url de endpoint del servicio
+    final url = Uri.https(_url, '3/search/movie', {
+      'api_key' : _apiKey,
+      'language': _language,
+      'query'   : query
+    });
+
+    //Retorna la resolucion del metodo
+    return await _procesarRespuesta(url);
+  }
 
 
 
