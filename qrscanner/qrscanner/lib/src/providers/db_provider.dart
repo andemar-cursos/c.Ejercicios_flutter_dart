@@ -112,7 +112,14 @@ class DBProvider {
   }
 
   
+  //Actualizar registros
+  Future<int> updateScan(ScanModel updateScan) async{
+    final db = await database;
 
+    final res = db.update('Scans', updateScan.toJson(), where: 'id = ?', whereArgs: [updateScan.id]);
+
+    return res;
+  }
 
 
 
