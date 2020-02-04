@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 //Paginas
 import 'package:qrscanner/src/pages/direcciones_page.dart';
 import 'package:qrscanner/src/pages/mapa_page.dart';
+import 'package:qrscanner/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -80,19 +81,22 @@ class _HomePageState extends State<HomePage> {
     //guiausc.000webhostapp.com
     //geo:3.4517276203872265,-76.5467120691193
     
-    String futureString = '';
+    String futureString = 'guiausc.000webhostapp.com';
 
-    try {
+
+    /* try {
       futureString = await BarcodeScanner.scan();
     } catch (e) {
       futureString = e.toString();
     }
-
-    print("futureString: $futureString");
+    */
 
     if(futureString != null){
-      print("HABEMUS INFO !!!!!!");
-    }
+      
+      final scan = ScanModel(valor: futureString); 
+
+      DBProvider.db.nuevoScan(scan);
+    } 
   }
 
 

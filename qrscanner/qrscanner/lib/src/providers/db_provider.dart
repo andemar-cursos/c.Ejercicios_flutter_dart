@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:qrscanner/src/models/scan_model.dart';
 import 'package:sqflite/sqflite.dart';
+
+import 'package:qrscanner/src/models/scan_model.dart';
+//El export sirve para llamar a los import's, si se hace instancia de esta clase.
+export 'package:qrscanner/src/models/scan_model.dart';
 
 class DBProvider {
 
