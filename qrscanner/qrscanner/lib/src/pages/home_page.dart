@@ -6,7 +6,7 @@ import 'package:qrscanner/src/models/scan_model.dart';
 import 'package:qrscanner/src/utils/utils.dart' as utils;
 //Paginas
 import 'package:qrscanner/src/pages/direcciones_page.dart';
-import 'package:qrscanner/src/pages/mapa_page.dart';
+import 'package:qrscanner/src/pages/mapas_page.dart';
 //Bloc
 import 'package:qrscanner/src/bloc/scans_bloc.dart';
 
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       body: _callPage(_currentIndex),
       bottomNavigationBar: _crearBottonNavigatorBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: _crearFlotante(),
+      floatingActionButton: _crearFlotante(context),
     );
   }
 
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-  Widget _crearFlotante(){
+  Widget _crearFlotante(context){
     return FloatingActionButton(
       child: Icon(Icons.filter_center_focus),
       onPressed: _scanQR,
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
     //geo:3.4517276203872265,-76.5467120691193
     
     String futureString = 'https://www.goodreads.com';
-
+    String futureString2 = 'geo:3.4517276203872265,-76.5467120691193';
     /* try {
       futureString = await BarcodeScanner.scan();
     } catch (e) {
@@ -101,8 +101,11 @@ class _HomePageState extends State<HomePage> {
       
       final scan = ScanModel(valor: futureString);
       scansBloc.agregarScan(scan);
+      
+      final scan2 = ScanModel(valor: futureString2);
+      scansBloc.agregarScan(scan2);
 
-      utils.abrirScan(scan);
+      utils.abrirScan(context, scan);
     } 
   }
 
