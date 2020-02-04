@@ -1,4 +1,7 @@
+//Terceros
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+//Paginas
 import 'package:qrscanner/src/pages/direcciones_page.dart';
 import 'package:qrscanner/src/pages/mapa_page.dart';
 
@@ -68,8 +71,45 @@ class _HomePageState extends State<HomePage> {
   Widget _crearFlotante(){
     return FloatingActionButton(
       child: Icon(Icons.filter_center_focus),
-      onPressed: (){},
+      onPressed: _scanQR,
       backgroundColor: Theme.of(context).primaryColor,
     );
   }
+  _scanQR() async{
+    
+    //guiausc.000webhostapp.com
+    //geo:3.4517276203872265,-76.5467120691193
+    
+    String futureString = '';
+
+    try {
+      futureString = await BarcodeScanner.scan();
+    } catch (e) {
+      futureString = e.toString();
+    }
+
+    print("futureString: $futureString");
+
+    if(futureString != null){
+      print("HABEMUS INFO !!!!!!");
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
