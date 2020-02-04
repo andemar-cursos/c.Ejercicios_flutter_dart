@@ -2,6 +2,8 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:qrscanner/src/models/scan_model.dart';
+//Utils
+import 'package:qrscanner/src/utils/utils.dart' as utils;
 //Paginas
 import 'package:qrscanner/src/pages/direcciones_page.dart';
 import 'package:qrscanner/src/pages/mapa_page.dart';
@@ -86,7 +88,7 @@ class _HomePageState extends State<HomePage> {
     //guiausc.000webhostapp.com
     //geo:3.4517276203872265,-76.5467120691193
     
-    String futureString = 'guiausc.000webhostapp.com';
+    String futureString = 'https://www.goodreads.com';
 
     /* try {
       futureString = await BarcodeScanner.scan();
@@ -98,8 +100,9 @@ class _HomePageState extends State<HomePage> {
     if(futureString != null){
       
       final scan = ScanModel(valor: futureString);
-      
       scansBloc.agregarScan(scan);
+
+      utils.abrirScan(scan);
     } 
   }
 
