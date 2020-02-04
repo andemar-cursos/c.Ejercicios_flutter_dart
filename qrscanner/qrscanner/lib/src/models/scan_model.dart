@@ -7,7 +7,12 @@ class ScanModel {
       this.id,
       this.tipo,
       this.valor,
-  });
+  }){
+    if(this.valor.contains('.com')){
+      this.tipo = 'http';
+    }else
+      this.tipo = 'geo';
+  }
 
   factory ScanModel.fromJson(Map<String, dynamic> json) => ScanModel(
       id    : json["id"],
