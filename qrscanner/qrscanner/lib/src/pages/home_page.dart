@@ -16,8 +16,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("QRScanner"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete_forever),
+            onPressed: (){},
+          )
+        ],
+      ),
       body: _callPage(_currentIndex),
       bottomNavigationBar: _crearBottonNavigatorBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: _crearFlotante(),
     );
   }
 
@@ -51,5 +62,14 @@ class _HomePageState extends State<HomePage> {
       case 1: return DireccionesPage();
       default:return MapasPage();
     }
+  }
+
+
+  Widget _crearFlotante(){
+    return FloatingActionButton(
+      child: Icon(Icons.filter_center_focus),
+      onPressed: (){},
+      backgroundColor: Theme.of(context).primaryColor,
+    );
   }
 }
