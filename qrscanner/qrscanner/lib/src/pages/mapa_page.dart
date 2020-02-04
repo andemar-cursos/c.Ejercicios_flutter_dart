@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:qrscanner/src/bloc/scans_bloc.dart';
 import 'package:qrscanner/src/providers/db_provider.dart';
 
 class MapasPage extends StatelessWidget {
+
+  final scanBloc = new ScansBlock();
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: DBProvider.db.getScanAll(),
+    return StreamBuilder(
+      stream: scanBloc.scansStream,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
         //Retorna un loading, mientras obtiene datos
         if(!snapshot.hasData) return Center(child: CircularProgressIndicator(),);
@@ -28,7 +32,7 @@ class MapasPage extends StatelessWidget {
             key: UniqueKey(),
             //Esto cambia el color del item cuando se mueve
             background: Container(color: Colors.red),
-            onDismissed: (direccion) => DBProvider.db.deleteScan(scans[i].id),
+            onDismissed: (direccion) => scanBloc.borrarScan(scans[i].id),
             child: ListTile(
               leading: Icon(Icons.cloud_queue,  color: Theme.of(context).primaryColor),
               title: Text(scans[i].valor),

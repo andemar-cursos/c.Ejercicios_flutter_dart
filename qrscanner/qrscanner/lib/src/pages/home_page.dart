@@ -1,10 +1,12 @@
 //Terceros
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:qrscanner/src/models/scan_model.dart';
 //Paginas
 import 'package:qrscanner/src/pages/direcciones_page.dart';
 import 'package:qrscanner/src/pages/mapa_page.dart';
-import 'package:qrscanner/src/providers/db_provider.dart';
+//Bloc
+import 'package:qrscanner/src/bloc/scans_bloc.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -15,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  final scansBloc = new ScansBlock();
   int _currentIndex = 0;
 
   @override
@@ -25,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.delete_forever),
-            onPressed: (){},
+            onPressed: _borrarTodos,
           )
         ],
       ),
@@ -36,6 +39,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+
+  //Widget's
   Widget _crearBottonNavigatorBar(){
 
     return BottomNavigationBar(
@@ -83,7 +88,6 @@ class _HomePageState extends State<HomePage> {
     
     String futureString = 'guiausc.000webhostapp.com';
 
-
     /* try {
       futureString = await BarcodeScanner.scan();
     } catch (e) {
@@ -93,14 +97,17 @@ class _HomePageState extends State<HomePage> {
 
     if(futureString != null){
       
-      final scan = ScanModel(valor: futureString); 
-
-      DBProvider.db.nuevoScan(scan);
+      final scan = ScanModel(valor: futureString);
+      
+      scansBloc.agregarScan(scan);
     } 
   }
 
 
-
+  //Metodos
+  void _borrarTodos(){
+    scansBloc.borrarScansAll();
+  }
 
 
 
