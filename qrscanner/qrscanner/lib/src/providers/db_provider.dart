@@ -63,13 +63,55 @@ class DBProvider {
 
 
   nuevoScan(ScanModel nuevoScan) async{
+    //Se llama la isntancia
+    final db = await database;
+    //Se hace el insert
+    final res = await db.insert('Scans', nuevoScan.toJson());
+    //Se retorna el numero de filas creadas
+    return res;
+  }
+
+
+  //Select - obtener informacion
+  Future<ScanModel> getScanId( int id ) async{
+    //Se llama la instancia
+    final db = await database;
+    //Se hace el query, indicando la tabla, el where y los argumentos del where
+    final res = await db.query('Scans', where: 'id = ?', whereArgs: [id]);
+    //Retorna el modelo, si se encuentra, si no un null.
+    return res.isNotEmpty ? ScanModel.fromJson(res.first) : null;
+  }
+
+
+  Future<List<ScanModel>> getScanAll() async{
+    //Se llama la instancia
+    final db = await database;
+    //Se hace el query, indicando la tabla, el where y los argumentos del where
+    final res = await db.query('Scans');
+    //Lista resultante      Si no esta vacia se hace
+    List<ScanModel> list =  res.isNotEmpty 
+                            //Se itera cada elemento, retornando un model, al final vuelve esto una lista
+                            ? res.map( (scan) => ScanModel.fromJson(scan)).toList() 
+                            //Si no, retorna una lista vacia
+                            : [];
+    return list;
+  }
+
+
+  Future<List<ScanModel>> getScansByTipo(String tipo) async{
 
     final db = await database;
 
-    final res = db.insert('Scans', nuevoScan.toJson());
+    //final res = await db.query('Scans', where: 'tipo = ?', whereArgs: [tipo]);
+    final res = await db.rawQuery("SELECt * FROM Scans WHERE tipo='$tipo'");
 
-    return res;
+    List<ScanModel> list =  res.isNotEmpty
+                            ? res.map( (scan) => ScanModel.fromJson(scan)).toList()
+                            : [];
+    return list;  
   }
+
+  
 
 
 
