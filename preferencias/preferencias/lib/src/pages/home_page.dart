@@ -13,21 +13,24 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final prefs = new PreferenciasUsuario();
-    
+    prefs.ultimaPagina = HomePage.routeName;
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Preferencias'),
+        backgroundColor: prefs.colorSecundario ? Colors.deepOrange : Colors.grey,
       ),
       //Esto permite desplegar un menu lateral
       drawer: MenuWidget(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text('Color secundario'),
+          Text('Color secundario: ${prefs.colorSecundario}'),
           Divider(),
           Text('Genero: ${prefs.genero}'),
           Divider(),
-          Text('Nombre usuario'),
+          Text('Nombre usuario: ${prefs.nombre}'),
           Divider(),
         ],
       ),

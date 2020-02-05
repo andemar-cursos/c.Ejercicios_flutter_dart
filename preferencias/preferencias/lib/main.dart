@@ -12,12 +12,15 @@ void main() async{
 }
   
 class MyApp extends StatelessWidget {
+  //Se hace un nuevo llamado, ya que el main, esta en un contexto diferente, asi este en el mismo archivo
+  final prefs = new PreferenciasUsuario();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Preferencias',
-      initialRoute: HomePage.routeName,
+      initialRoute: prefs.ultimaPagina,
       routes: {
         HomePage.routeName    : (BuildContext context) => HomePage(),
         SettingsPage.routeName: (BuildContext context) => SettingsPage()
