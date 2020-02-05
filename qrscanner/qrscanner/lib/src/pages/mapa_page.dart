@@ -7,6 +7,9 @@ import 'package:qrscanner/src/models/scan_model.dart';
 
 
 class MapaPage extends StatelessWidget {
+
+  final map = new MapController();
+
   @override
   Widget build(BuildContext context) {
 
@@ -18,7 +21,9 @@ class MapaPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.my_location),
-            onPressed: (){},
+            onPressed: (){
+              map.move(scan.getLatLng(), 13);
+            },
           )
         ],
       ),
@@ -31,6 +36,7 @@ class MapaPage extends StatelessWidget {
   Widget _crearFlutterMap(BuildContext context, ScanModel scan){
 
     return FlutterMap(
+      mapController: map,
       options: MapOptions(
         center: scan.getLatLng(),
         zoom: 15,
