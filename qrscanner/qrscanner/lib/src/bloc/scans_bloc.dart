@@ -1,9 +1,10 @@
 //Terceros
 import 'dart:async';
+import 'package:qrscanner/src/bloc/validator.dart';
 import 'package:qrscanner/src/providers/db_provider.dart';
 
 
-class ScansBlock{
+class ScansBlock with Validators{
   
   static final ScansBlock _singleton = new ScansBlock._internal();
 
@@ -23,8 +24,9 @@ class ScansBlock{
   }
 
   final _scansController = StreamController<List<ScanModel>>.broadcast();
-
-  Stream<List<ScanModel>> get scansStream => _scansController.stream;
+  // El transform se usa mediante los atributos de la clase validator
+  Stream<List<ScanModel>> get scansStream => _scansController.stream.transform(validarGeo);
+  Stream<List<ScanModel>> get scansStreamHttp => _scansController.stream.transform(validarHttp);
 
   agregarScan(ScanModel scanModel) async{
     await DBProvider.db.nuevoScan(scanModel);

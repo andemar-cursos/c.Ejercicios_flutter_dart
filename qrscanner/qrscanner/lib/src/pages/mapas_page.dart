@@ -10,7 +10,10 @@ class MapasPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    //Se hace el llamado, cada vez que se ingresa a la pagina
+    scanBloc.obtenerScans();
+
+    return StreamBuilder<List<ScanModel>>(
       stream: scanBloc.scansStream,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
         //Retorna un loading, mientras obtiene datos
