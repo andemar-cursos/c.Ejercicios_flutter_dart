@@ -29,3 +29,9 @@ class PreferenciasUsuario{
     //Si no se a guardado nada con genero, entonces retorna 1.
     return _prefs.getInt('genero') ?? 1;
   }
+
+  set genero(int value){
+    _prefs.setInt('genero', value);
+  }
+
+}
