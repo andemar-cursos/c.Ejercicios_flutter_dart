@@ -6,9 +6,17 @@ import 'package:latlong/latlong.dart';
 import 'package:qrscanner/src/models/scan_model.dart';
 
 
-class MapaPage extends StatelessWidget {
+class MapaPage extends StatefulWidget {
 
+  @override
+  _MapaPageState createState() => _MapaPageState();
+}
+
+class _MapaPageState extends State<MapaPage> {
   final map = new MapController();
+  List<String> modos = ['streets', 'dark', 'light', 'outdoors', 'satellite'];
+  int     modoActual = 0;
+  String  tipoMapa = 'streets';
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +36,10 @@ class MapaPage extends StatelessWidget {
         ],
       ),
       body: _crearFlutterMap(context, scan),
+      floatingActionButton: _crearBotonFlotante(context),
     );
   }
 
-
-  //Widget
   Widget _crearFlutterMap(BuildContext context, ScanModel scan){
 
     return FlutterMap(
@@ -48,7 +55,6 @@ class MapaPage extends StatelessWidget {
     );
   }
 
-
   LayerOptions _crearMapa(){
     
     return TileLayerOptions(
@@ -56,11 +62,10 @@ class MapaPage extends StatelessWidget {
       '{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}',
       additionalOptions: {
         'accessToken' : 'pk.eyJ1IjoiYW5kZW1hciIsImEiOiJjamhlMWs0YXUwdWMxM2FvMTFoc2xoY2VkIn0.kA78PqrsSBpILUiuQXkojA',
-        'id'          : 'mapbox.streets'
+        'id'          : 'mapbox.$tipoMapa'
       } 
     );
   }
-
 
   _crearMarcadores(BuildContext context, ScanModel scan){
     
@@ -78,4 +83,17 @@ class MapaPage extends StatelessWidget {
     );
   }
 
+  Widget _crearBotonFlotante(BuildContext context){
+
+    return FloatingActionButton(
+      child: Icon(Icons.repeat),
+      onPressed: (){
+        modoActual++;
+        if(modoActual >= modos.length) modoActual = 0;
+        tipoMapa = modos[modoActual];
+        setState(() {});
+      },
+      backgroundColor: Theme.of(context).primaryColor,
+    );
+  }
 }
