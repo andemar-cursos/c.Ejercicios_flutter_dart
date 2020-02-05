@@ -1,7 +1,7 @@
 //Terceros
 import 'package:flutter/material.dart';
 //Paginas
-import 'package:preferencias/src/pages/settings_page.dart';
+//import 'package:preferencias/src/pages/settings_page.dart';
 import 'package:preferencias/src/widgets/menu_widget.dart';
 
 class HomePage extends StatelessWidget {
