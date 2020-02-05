@@ -22,13 +22,13 @@ class MapaPage extends StatelessWidget {
           )
         ],
       ),
-      body: _crearFlutterMap(scan),
+      body: _crearFlutterMap(context, scan),
     );
   }
 
 
   //Widget
-  Widget _crearFlutterMap(ScanModel scan){
+  Widget _crearFlutterMap(BuildContext context, ScanModel scan){
 
     return FlutterMap(
       options: MapOptions(
@@ -37,6 +37,7 @@ class MapaPage extends StatelessWidget {
       ),
       layers: [
         _crearMapa(),
+        _crearMarcadores(context, scan),
       ],
     );
   }
@@ -55,6 +56,20 @@ class MapaPage extends StatelessWidget {
   }
 
 
-
+  _crearMarcadores(BuildContext context, ScanModel scan){
+    
+    return MarkerLayerOptions(
+      markers: <Marker>[
+        Marker(
+          width: 100.0,
+          height: 100.0,
+          point: scan.getLatLng(),
+          builder: (context) => Container(
+            child: Icon(Icons.location_on, size: 45.0, color: Theme.of(context).primaryColor),
+          )
+        )
+      ]
+    );
+  }
 
 }
