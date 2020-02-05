@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:preferencias/src/widgets/menu_widget.dart';
 
 class SettingsPage extends StatelessWidget {
 
@@ -10,6 +11,7 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Settings'),
       ),
+      drawer: MenuWidget(),
       body: Column(
         children: <Widget>[
           Text('Color secundario'),
