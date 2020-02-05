@@ -88,23 +88,19 @@ class _HomePageState extends State<HomePage> {
     //guiausc.000webhostapp.com
     //geo:3.4517276203872265,-76.5467120691193
     
-    String futureString = 'https://www.goodreads.com';
-    String futureString2 = 'geo:3.4517276203872265,-76.5467120691193';
-    /* try {
+    String futureString;
+    try {
       futureString = await BarcodeScanner.scan();
     } catch (e) {
       futureString = e.toString();
     }
-    */
+   
 
     if(futureString != null){
       
       final scan = ScanModel(valor: futureString);
       scansBloc.agregarScan(scan);
       
-      final scan2 = ScanModel(valor: futureString2);
-      scansBloc.agregarScan(scan2);
-
       utils.abrirScan(context, scan);
     } 
   }
