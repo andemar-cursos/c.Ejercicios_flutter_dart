@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:formvalidation/src/blocs/provider.dart';
+import 'package:formvalidation/src/pages/home_page.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -18,6 +19,8 @@ class LoginPage extends StatelessWidget {
     );
   }
   //-----
+
+  //-------------WIDGETS-----------//
 
   //Widget fondo
   Widget _crearFondo(BuildContext context){
@@ -215,7 +218,7 @@ class LoginPage extends StatelessWidget {
           textColor: Colors.white,
           //Si hay data del blocfromValidStream, retorna una funcion, si no, null.
           //Si el hay data, significa que el email y el pass, fueron correctos.
-          onPressed: snapshot.hasData? (){} : null,
+          onPressed: snapshot.hasData? ()=>_login(context, bloc) : null, 
         );  
       },
     );
@@ -223,8 +226,16 @@ class LoginPage extends StatelessWidget {
   //----
 
 
+  //----------FUNCIONES------------//
 
+  _login(BuildContext context, LoginBloc bloc){
 
+    print('=====================');
+    print("Email: ${bloc.email}");
+    print("Pass: ${bloc.pass}");
+
+    Navigator.pushReplacementNamed(context, HomePage.routeName);
+  }
 
 
 
