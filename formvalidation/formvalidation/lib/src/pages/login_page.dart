@@ -131,7 +131,7 @@ class LoginPage extends StatelessWidget {
           SizedBox(height: 20.0),
           _crearPass(bloc),
           SizedBox(height: 20.0),
-          _crearBoton(),
+          _crearBoton(bloc),
         ],
       ),
     ); 
@@ -192,25 +192,32 @@ class LoginPage extends StatelessWidget {
       },
     );
   }
-  Widget _crearBoton(){
-    //Es un boton con el tema basado en material
-    return RaisedButton(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-        child: Text('Ingresar'),
-      ),
-      shape: RoundedRectangleBorder(
-        //Bordes redondeados del boton
-        borderRadius: BorderRadius.circular(5.0)
-      ),
-      //Esto evita que el boton tenga sombra
-      elevation: 0.0,
-      //Color del boton
-      color: Colors.deepPurple,
-      //Color del texto
-      textColor: Colors.white,
-      //Funcion
-      onPressed: (){},
+  Widget _crearBoton(LoginBloc bloc){
+
+    return StreamBuilder(
+      stream: bloc.formValidStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        //Es un boton con el tema basado en material
+        return RaisedButton(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+            child: Text('Ingresar'),
+          ),
+          shape: RoundedRectangleBorder(
+            //Bordes redondeados del boton
+            borderRadius: BorderRadius.circular(5.0)
+          ),
+          //Esto evita que el boton tenga sombra
+          elevation: 0.0,
+          //Color del boton
+          color: Colors.deepPurple,
+          //Color del texto
+          textColor: Colors.white,
+          //Si hay data del blocfromValidStream, retorna una funcion, si no, null.
+          //Si el hay data, significa que el email y el pass, fueron correctos.
+          onPressed: snapshot.hasData? (){} : null,
+        );  
+      },
     );
   }
   //----
