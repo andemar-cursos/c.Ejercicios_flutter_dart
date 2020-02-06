@@ -1,7 +1,9 @@
 //Terceros
 import 'dart:async';
+//Validaciones
+import 'package:formvalidation/src/blocs/validators.dart';
 
-class LoginBloc{
+class LoginBloc with Validaors{
 
   //El broadcast se usa para la escucha multiple
   final _emailController = StreamController<String>.broadcast();
@@ -11,8 +13,9 @@ class LoginBloc{
 
 
   //Recuperar datos del Stream
-  Stream<String> get emailStream  => _emailController.stream;
-  Stream<String> get passStream   => _passController.stream;
+  //El transform valida la informacion que transita por el Stream
+  Stream<String> get emailStream  => _emailController.stream.transform(validarEmail);
+  Stream<String> get passStream   => _passController.stream.transform(validarPass);
   
   //Insertar valores al Stream
   Function(String) get  changeEmail => _emailController.sink.add;

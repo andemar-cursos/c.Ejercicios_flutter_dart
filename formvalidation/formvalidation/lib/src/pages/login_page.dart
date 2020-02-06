@@ -156,6 +156,7 @@ class LoginPage extends StatelessWidget {
               labelText: 'Correo Electronico',
               //test
               //counterText: snapshot.data,
+              errorText: snapshot.error
             ),
             //onChanged: (value) => bloc.changeEmail(value),   //<-- Esto es lo mismo
             onChanged: bloc.changeEmail,
@@ -181,6 +182,8 @@ class LoginPage extends StatelessWidget {
               labelText: 'Contrasena',
               //Test
               //counterText: snapshot.data,
+              //Este obtendra los datos, si la validacion no es correcta
+              errorText: snapshot.error,
             ),
             onChanged: bloc.changePass,
           )
