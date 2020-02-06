@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:formvalidation/src/blocs/provider.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -78,7 +79,8 @@ class LoginPage extends StatelessWidget {
   Widget _loginForm(BuildContext context){
 
     final size = MediaQuery.of(context).size;
-
+    final bloc = Provider.of(context);
+    
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
@@ -88,7 +90,7 @@ class LoginPage extends StatelessWidget {
               height: 230,
             ),
           ),
-          _cajaLogin(size),
+          _cajaLogin(size, bloc),
           Text('¿Olvido la contraseña?'),
           //Esto permite que la caja no quede pegada en la esquina, cuando la pantalla esta en horizontal
           SizedBox(height: 100.0),
@@ -96,7 +98,7 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-  Widget _cajaLogin(Size size){
+  Widget _cajaLogin(Size size, LoginBloc bloc){
 
     return Container(
       //La caja sera del 85% del ancho de la pantalla
@@ -125,48 +127,66 @@ class LoginPage extends StatelessWidget {
         children: <Widget>[
           Text('Ingreso', style: TextStyle(fontSize: 20.0),),
           SizedBox(height: 40.0),
-          _crearEmail(),
+          _crearEmail(bloc),
           SizedBox(height: 20.0),
-          _crearPass(),
+          _crearPass(bloc),
           SizedBox(height: 20.0),
           _crearBoton(),
         ],
       ),
     ); 
   }
-  Widget _crearEmail(){
+  Widget _crearEmail(LoginBloc bloc){
 
-    return Container(
-      //Esto permite separar la caja de los bordes
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      //Label del correo
-      child: TextField(
-        //Al desplegar el teclado, es de tipo email
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          icon: Icon(Icons.alternate_email, color: Colors.deepPurple),
-          //Este es el texto, al oprimir el label
-          hintText: 'ejemplo@correo.com',
-          //Estees el texto, cuando no se ha oprimido el label
-          labelText: 'Correo Electronico',
-        ),
-      ),
+    return StreamBuilder(
+      stream: bloc.emailStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        return Container(
+          //Esto permite separar la caja de los bordes
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          //Label del correo
+          child: TextField(
+            //Al desplegar el teclado, es de tipo email
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              icon: Icon(Icons.alternate_email, color: Colors.deepPurple),
+              //Este es el texto, al oprimir el label
+              hintText: 'ejemplo@correo.com',
+              //Estees el texto, cuando no se ha oprimido el label
+              labelText: 'Correo Electronico',
+              //test
+              //counterText: snapshot.data,
+            ),
+            //onChanged: (value) => bloc.changeEmail(value),   //<-- Esto es lo mismo
+            onChanged: bloc.changeEmail,
+          ),
+        );  
+      },
     );
   }
-  Widget _crearPass(){
+  Widget _crearPass(LoginBloc bloc){
 
-    return Container(
-      //Esto permite separar la caja de los bordes
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      //Label del pass
-      child: TextField(
-        //Permite ocultar la pass cuando se escribe
-        obscureText: true,
-        decoration: InputDecoration(
-          icon: Icon(Icons.lock_outline, color: Colors.deepPurple),
-          labelText: 'Contrasena',
-        ),
-      ),
+    return StreamBuilder(
+      stream: bloc.passStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot){
+        return Container(
+          //Esto permite separar la caja de los bordes
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          //Label del pass
+          child: TextField(
+            //Permite ocultar la pass cuando se escribe
+            obscureText: true,
+            decoration: InputDecoration(
+              icon: Icon(Icons.lock_outline, color: Colors.deepPurple),
+              labelText: 'Contrasena',
+              //Test
+              //counterText: snapshot.data,
+            ),
+            onChanged: bloc.changePass,
+          )
+          
+        );
+      },
     );
   }
   Widget _crearBoton(){
