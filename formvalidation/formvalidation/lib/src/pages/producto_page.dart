@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 //Model
 import 'package:formvalidation/src/models/producto_model.dart';
+import 'package:formvalidation/src/providers/productos_provider.dart';
 //Utilidades
 import 'package:formvalidation/src/utils/utils.dart' as utils;
 
@@ -16,6 +17,8 @@ class ProductoPage extends StatefulWidget {
 class _ProductoPageState extends State<ProductoPage> {
   //Esta es la llave que 'amarrara' al form.
   final  formKey = GlobalKey<FormState>();
+  //Se hace la instancia con los metodos REST
+  final  productosProvider = Productosprovider();
 
   ProductoModel producto = new ProductoModel();
 
@@ -122,6 +125,9 @@ class _ProductoPageState extends State<ProductoPage> {
 
     print(producto.titulo);
     print(producto.valor);
+    print(producto.disponible);
 
+    //Servicio REST para creaer un product en la DB.
+    productosProvider.crearProducto(producto);
   }
 }
