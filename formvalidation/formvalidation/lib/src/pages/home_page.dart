@@ -7,6 +7,7 @@ import 'package:formvalidation/src/models/producto_model.dart';
 import 'package:formvalidation/src/providers/productos_provider.dart';
 //Paginas
 import 'producto_page.dart';
+import 'producto_page.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -34,16 +35,35 @@ class HomePage extends StatelessWidget {
    return FutureBuilder(
      future: productosProvider.cargarProducos(),
      builder: (BuildContext context, AsyncSnapshot<List<ProductoModel>> snapshot) {
-       
        if(snapshot.hasData){
-         return Container(
-           
-         );
+
+         final productos = snapshot.data;
+
+         return ListView.builder(
+           itemCount: productos.length,
+           itemBuilder: (context, i) => _crearItem(context, productos[i]),
+          );
        }else
         return Center(child: CircularProgressIndicator());
-
      },
    );
+  }
+  Widget _crearItem(BuildContext context ,ProductoModel producto){
+
+    return Dismissible(
+      key: UniqueKey(),
+      background: Container(
+        color: Colors.red,
+      ),
+      onDismissed: (direccion){
+        //TODO: Borrar Producto
+      },
+      child: ListTile(
+        title: Text('${producto.titulo} - ${producto.valor}'),
+        subtitle: Text('ID: ${producto.id}'),
+        onTap: () => Navigator.pushNamed(context, ProductoPage.routeName)
+      ),
+    );
   }
   
   Widget _crearBoton(BuildContext context){
