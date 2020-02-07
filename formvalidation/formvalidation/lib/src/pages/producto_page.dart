@@ -1,5 +1,8 @@
 //Terceros
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 //Model
 import 'package:formvalidation/src/models/producto_model.dart';
 import 'package:formvalidation/src/providers/productos_provider.dart';
@@ -22,6 +25,8 @@ class _ProductoPageState extends State<ProductoPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   //Se hace la instancia con los metodos REST
   final  productosProvider = ProductosProvider();
+  //Intancia file para la foto a subir/actualizar
+  File foto;
 
   //Bandera para el guardado/editado de productos
   bool _guardando = false;
@@ -45,11 +50,11 @@ class _ProductoPageState extends State<ProductoPage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.photo_size_select_actual),
-            onPressed: (){}
+            onPressed: _seleccionarFoto,
           ),
           IconButton(
             icon: Icon(Icons.camera_alt),
-            onPressed: (){}
+            onPressed: _tomarFoto
           ),
         ],
       ),
@@ -61,6 +66,7 @@ class _ProductoPageState extends State<ProductoPage> {
             key: formKey,
             child: Column(
               children: <Widget>[
+                _mostrarFoto(),
                 _crearNombre(),
                 _crearPrecio(),
                 _crearDisponible(context),
@@ -71,6 +77,19 @@ class _ProductoPageState extends State<ProductoPage> {
         ),
       ),
     );
+  }
+  //----WIDGET'S DEL BUILD----//
+  Widget _mostrarFoto(){
+    if(producto.fotoUrl != null){
+      return Container();
+    }else{
+      return Image(
+        //Si la imagen tiene data, se guarda la imagen, si no, se pode 'no-image'
+        image: AssetImage( foto?.path ?? 'assets/img/no-image.png'),
+        height: 300,
+        fit: BoxFit.cover
+      );
+    }
   }
   Widget _crearNombre(){
 
@@ -132,6 +151,23 @@ class _ProductoPageState extends State<ProductoPage> {
       onPressed: _guardando? null : _submit,
     );
   }
+  //----FIN WIDGET'S DEL BUILD----//
+
+  //---FUNCIONES---//
+  void _seleccionarFoto() async{
+    foto = await ImagePicker.pickImage(
+      source: ImageSource.gallery
+    );
+
+    if(foto != null){
+      //Limpieza
+    }
+
+    setState(() {});
+  }
+  void _tomarFoto(){
+
+  }
   void _submit(){
     //Si el formulario es incorrecto, no realiza el codigo
     if(!formKey.currentState.validate()) return;
@@ -166,7 +202,7 @@ class _ProductoPageState extends State<ProductoPage> {
 
     scaffoldKey.currentState.showSnackBar(snackbar);
   }
-
+  //--FIN FUNCIONES--//
 
 
 
