@@ -18,8 +18,13 @@ class _ProductoPageState extends State<ProductoPage> {
 
   //Esta es la llave que 'amarrara' al form.
   final  formKey = GlobalKey<FormState>();
+  //Esta es la llave que 'amarra' al scaffold
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   //Se hace la instancia con los metodos REST
   final  productosProvider = ProductosProvider();
+
+  //Bandera para el guardado/editado de productos
+  bool _guardando = false;
 
   ProductoModel producto = new ProductoModel();
 
@@ -34,6 +39,7 @@ class _ProductoPageState extends State<ProductoPage> {
     }
 
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text('Producto'),
         actions: <Widget>[
@@ -122,7 +128,8 @@ class _ProductoPageState extends State<ProductoPage> {
       icon: Icon(Icons.save, color: Colors.white,),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       color: Theme.of(context).primaryColor,
-      onPressed: _submit,
+      //Si esta guardando, retorne un null (para deshabilitar el boton), si no, habilite el boton con la funcion.
+      onPressed: _guardando? null : _submit,
     );
   }
   void _submit(){
@@ -132,14 +139,45 @@ class _ProductoPageState extends State<ProductoPage> {
     //Esta linea hara el save, de los campos del formulario
     formKey.currentState.save();
 
-    print(producto.titulo);
-    print(producto.valor);
-    print(producto.disponible);
+    //Bandera para el guardado de elementos (deshabilitar el boton de guardar)
+    setState(() {_guardando = true;});
 
     //Servicio REST para crear o editar un producto en la DB.
     if(producto.id == null){
       productosProvider.crearProducto(producto);
     } else
       productosProvider.editarProducto(producto);
+    
+    //Bandera para el guardado de elementos (deshabilitar el boton de guardar)
+    setState(() {_guardando = false;});
+
+    //Este mensaje aparecera, cuando se guarde los datos
+    mostrarSnackBar(context, 'Registro guardado');
+    //Si despues de guardar/editar, se quiere salir de la pagina
+    //Navigator.pop(context);
   }
+  void mostrarSnackBar(BuildContext context, String mensaje){
+
+    final snackbar = SnackBar(
+      content: Text(mensaje),
+      backgroundColor: Theme.of(context).primaryColor,
+      duration: Duration(milliseconds: 1500),
+    );
+
+    scaffoldKey.currentState.showSnackBar(snackbar);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
