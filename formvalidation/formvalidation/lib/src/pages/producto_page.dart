@@ -50,11 +50,11 @@ class _ProductoPageState extends State<ProductoPage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.photo_size_select_actual),
-            onPressed: _seleccionarFoto,
+            onPressed: () => _procesarImagen(ImageSource.gallery),
           ),
           IconButton(
             icon: Icon(Icons.camera_alt),
-            onPressed: _tomarFoto
+            onPressed: () => _procesarImagen(ImageSource.camera),
           ),
         ],
       ),
@@ -154,19 +154,14 @@ class _ProductoPageState extends State<ProductoPage> {
   //----FIN WIDGET'S DEL BUILD----//
 
   //---FUNCIONES---//
-  void _seleccionarFoto() async{
+  void _procesarImagen(ImageSource origen) async{
     foto = await ImagePicker.pickImage(
-      source: ImageSource.gallery
+      source: origen,
     );
-
     if(foto != null){
       //Limpieza
     }
-
     setState(() {});
-  }
-  void _tomarFoto(){
-
   }
   void _submit(){
     //Si el formulario es incorrecto, no realiza el codigo
