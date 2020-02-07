@@ -1,5 +1,7 @@
 //Terceros
 import 'package:flutter/material.dart';
+//Model
+import 'package:formvalidation/src/models/producto_model.dart';
 //Utilidades
 import 'package:formvalidation/src/utils/utils.dart' as utils;
 
@@ -14,6 +16,8 @@ class ProductoPage extends StatefulWidget {
 class _ProductoPageState extends State<ProductoPage> {
   //Esta es la llave que 'amarrara' al form.
   final  formKey = GlobalKey<FormState>();
+
+  ProductoModel producto = new ProductoModel();
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +45,7 @@ class _ProductoPageState extends State<ProductoPage> {
               children: <Widget>[
                 _crearNombre(),
                 _crearPrecio(),
+                _crearDisponible(context),
                 _crearBoton(context),
               ],
             ),
@@ -49,10 +54,10 @@ class _ProductoPageState extends State<ProductoPage> {
       ),
     );
   }
-
   Widget _crearNombre(){
 
     return TextFormField(
+      initialValue: producto.titulo,
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         labelText: 'Producto',
@@ -64,11 +69,13 @@ class _ProductoPageState extends State<ProductoPage> {
         }
           return null;
       },
+      //Si el campo es correcto, se le asigna el nombre al producto
+      onSaved: (value) => producto.titulo = value,
     );
   }
-
   Widget _crearPrecio(){
     return TextFormField(
+      initialValue: producto.valor.toString(),
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       decoration: InputDecoration(
         labelText: 'Precio',
@@ -80,9 +87,21 @@ class _ProductoPageState extends State<ProductoPage> {
         }else
           return 'Solo numeros';
       },
+      //Si el campo es correcto, se le asigna el valor al producto
+      onSaved: (value) => producto.valor = double.parse(value),
     );
   }
+  Widget _crearDisponible(BuildContext context){
 
+    return SwitchListTile(
+      value: producto.disponible,
+      title: Text('Disponible'),
+      activeColor: Theme.of(context).primaryColor,
+      onChanged: (value) => setState((){
+        producto.disponible = value;
+      }),
+    );
+  }
   Widget _crearBoton(BuildContext context){
 
     return RaisedButton.icon(
@@ -94,11 +113,15 @@ class _ProductoPageState extends State<ProductoPage> {
       onPressed: _submit,
     );
   }
-
   void _submit(){
     //Si el formulario es incorrecto, no realiza el codigo
     if(!formKey.currentState.validate()) return;
-    
+
+    //Esta linea hara el save, de los campos del formulario
+    formKey.currentState.save();
+
+    print(producto.titulo);
+    print(producto.valor);
 
   }
 }
