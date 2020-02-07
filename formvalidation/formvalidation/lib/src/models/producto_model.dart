@@ -28,7 +28,8 @@ class ProductoModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "id"        : id,
+    //El id se comenta, para no tener el campo duplicado, esto pasa en firebase.
+    //"id"        : id,
     "titulo"    : titulo,
     "valor"     : valor,
     "disponible": disponible,

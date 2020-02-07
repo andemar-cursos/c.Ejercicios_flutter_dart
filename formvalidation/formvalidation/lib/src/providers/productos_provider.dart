@@ -26,6 +26,21 @@ class ProductosProvider{
 
     return true;
   }
+  
+  
+  //Metodo REST para la edicion de un producto en la Db
+  Future<bool> editarProducto(ProductoModel producto) async{
+    
+    //Endpoint para agregar un producto. -> En firebase se necesita el .json al final
+    final url = '$_url/productos/${producto.id}.json';
+    
+    //Se realiza la insercion. en el body se envia el string con los datos del producto
+    //Ejem: {"id":null,"titulo":"Tamal","valor":8.0,"disponible":true,"fotoUrl":null}
+    final resp = await http.put(url, body: productoModelToJson(producto));
+    //print(productoModelToJson(producto));
+
+    return true;
+  }
 
 
   Future<List<ProductoModel>> cargarProducos() async{

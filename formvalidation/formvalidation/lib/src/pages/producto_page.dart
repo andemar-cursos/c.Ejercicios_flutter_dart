@@ -15,6 +15,7 @@ class ProductoPage extends StatefulWidget {
 }
 
 class _ProductoPageState extends State<ProductoPage> {
+
   //Esta es la llave que 'amarrara' al form.
   final  formKey = GlobalKey<FormState>();
   //Se hace la instancia con los metodos REST
@@ -24,6 +25,14 @@ class _ProductoPageState extends State<ProductoPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    //Se obtienen los argumentos, si se enviaron.
+    final ProductoModel prodArg = ModalRoute.of(context).settings.arguments;
+    //Si llega un argumento del navigator, se inserta en el producto.
+    if(prodArg != null){
+      producto = prodArg;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Producto'),
@@ -127,7 +136,10 @@ class _ProductoPageState extends State<ProductoPage> {
     print(producto.valor);
     print(producto.disponible);
 
-    //Servicio REST para creaer un product en la DB.
-    productosProvider.crearProducto(producto);
+    //Servicio REST para crear o editar un producto en la DB.
+    if(producto.id == null){
+      productosProvider.crearProducto(producto);
+    } else
+      productosProvider.editarProducto(producto);
   }
 }

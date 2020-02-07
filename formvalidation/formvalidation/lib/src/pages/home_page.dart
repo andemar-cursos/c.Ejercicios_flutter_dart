@@ -7,7 +7,6 @@ import 'package:formvalidation/src/models/producto_model.dart';
 import 'package:formvalidation/src/providers/productos_provider.dart';
 //Paginas
 import 'producto_page.dart';
-import 'producto_page.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -24,7 +23,7 @@ class HomePage extends StatelessWidget {
         title: Text('Home Page'),
       ),
       body: _crearListado(),
-      floatingActionButton: _crearBoton(context   ),
+      floatingActionButton: _crearBoton(context),
     );
   }
 
@@ -62,7 +61,8 @@ class HomePage extends StatelessWidget {
       child: ListTile(
         title: Text('${producto.titulo} - ${producto.valor}'),
         subtitle: Text('ID: ${producto.id}'),
-        onTap: () => Navigator.pushNamed(context, ProductoPage.routeName)
+        //Se envia por argumento el producto seleccionado por el usuario.
+        onTap: () => Navigator.pushNamed(context, ProductoPage.routeName, arguments: producto)
       ),
     );
   }
