@@ -1,0 +1,3 @@
+carpeta 12
+cap 18
+min 9:41
