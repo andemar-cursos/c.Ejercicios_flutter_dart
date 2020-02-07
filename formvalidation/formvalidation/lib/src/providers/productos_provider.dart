@@ -58,8 +58,18 @@ class ProductosProvider{
   }
 
 
+  //REST para borrar un producto segun su ID
+  Future<int> borrarProducto(String id) async{
+    //Direccion del servicio REST
+    final url = '$_url/productos/$id.json';
+    print(url);
+    //Se hace la peticion
+    final resp = await http.delete(url);
+    //Se imprime la respuesta del body
+    print(json.decode(resp.body));
 
-
+    return 1;
+  }
 
 
 
