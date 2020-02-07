@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 //Modelos
 import 'package:formvalidation/src/models/producto_model.dart';
 
-class Productosprovider{
+class ProductosProvider{
 
   //Url base del servicio REST
   final String _url = 'https://flutter-varios-d5e08.firebaseio.com';
@@ -28,7 +28,34 @@ class Productosprovider{
   }
 
 
+  Future<List<ProductoModel>> cargarProducos() async{
+    //Url dele endpoint
+    final url   = '$_url/productos.json';
+    //Esta es la respuesta del servidor
+    final resp  = await http.get(url);
+    //Este mapa obtiene el body de la respuesta
+    final Map<String, dynamic> decodedData = json.decode(resp.body);
+    //Si se obtuvo nada, retorna una lista vacia
+    if(decodedData == null) return [];
 
+    //Se crea la lista de retorno que contiene todos los productos
+    final List<ProductoModel> productos = new List();
+    //Se crea un temp
+    ProductoModel prodTemp = new ProductoModel();
+
+    //Se realiza un forEach por cada objeto
+    decodedData.forEach( (id, prod) {
+      //Se pasa de String Json al productoModel
+      prodTemp = ProductoModel.fromJson(prod);
+      //Se agrega el id
+      prodTemp.id = id;
+      //Se agrega el temp a la lista retorno
+      productos.add(prodTemp);
+    });
+
+    //Se retorna la lista de la DB.
+    return productos;
+  }
 
 
 

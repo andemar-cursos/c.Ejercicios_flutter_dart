@@ -18,7 +18,7 @@ class _ProductoPageState extends State<ProductoPage> {
   //Esta es la llave que 'amarrara' al form.
   final  formKey = GlobalKey<FormState>();
   //Se hace la instancia con los metodos REST
-  final  productosProvider = Productosprovider();
+  final  productosProvider = ProductosProvider();
 
   ProductoModel producto = new ProductoModel();
 
