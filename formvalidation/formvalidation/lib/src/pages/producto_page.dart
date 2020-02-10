@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:formvalidation/src/blocs/productos_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 //Model
 import 'package:formvalidation/src/models/producto_model.dart';
@@ -196,6 +197,11 @@ class _ProductoPageState extends State<ProductoPage> {
     //Este mensaje aparecera, cuando se guarde los datos
     mostrarSnackBar(context, 'Registro guardado');
     //Si despues de guardar/editar, se quiere salir de la pagina
+
+    //Esto 'refresca' el listado de home.
+    final productosBloc = new ProductosBloc();
+    productosBloc.cargarProductos();
+
     Navigator.pop(context);
   }
   void mostrarSnackBar(BuildContext context, String mensaje){
