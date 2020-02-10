@@ -1,6 +1,9 @@
 //terceros
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:mime_type/mime_type.dart';
 //Modelos
 import 'package:formvalidation/src/models/producto_model.dart';
 
@@ -87,6 +90,52 @@ class ProductosProvider{
   }
 
 
+  Future<String> subirImagen(File imagen) async{
+
+    //Al subi un archivo se necesita usar el Uri, en vez del url
+    final url = Uri.parse('https://api.cloudinary.com/v1_1/depfbgqy4/image/upload?upload_preset=spdad5ll');
+
+    final mimeType = mime(imagen.path).split('/'); //-> image/jpg-png-gif..etc.
+
+    //Direccion donde se hara el request
+    final imageUploadRequest = http.MultipartRequest(
+      'POST',
+      url,
+    );
+    
+    //Archivo a subir
+    final file = await http.MultipartFile.fromPath(
+      //Se expecifica el tipo que se subira
+      'file',
+      //Se expecifica el path del archivo
+      imagen.path,
+      //Se expecifica que tipo y sub tipo es. image/jpg
+      contentType: MediaType(mimeType[0], mimeType[1]),
+    );
+
+    //Se agrega el archivo al request.
+    //Si se quiere adjuntar mar archivos, solo se duplica esta linea, pasando por parametro el otro archivo.
+    imageUploadRequest.files.add(file);
+    
+
+    //Ejecucion del request
+    final streamResponse = await imageUploadRequest.send();
+
+    //Respuesta del request
+    final resp = await http.Response.fromStream(streamResponse);
+
+    if(resp.statusCode != 200 && resp.statusCode != 201){
+      print('Algo salio mal');
+      print(resp.body);
+      return null;
+    }
+    
+    final respData = json.decode(resp.body);
+    print(respData);
+
+    //Esa posicion, es donde se encuentra la url de la imagen subida.
+    return respData['secure_url'];
+  }
 
 
 

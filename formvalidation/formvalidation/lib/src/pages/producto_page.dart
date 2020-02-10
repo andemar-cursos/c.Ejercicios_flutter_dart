@@ -163,7 +163,7 @@ class _ProductoPageState extends State<ProductoPage> {
     }
     setState(() {});
   }
-  void _submit(){
+  void _submit() async{
     //Si el formulario es incorrecto, no realiza el codigo
     if(!formKey.currentState.validate()) return;
 
@@ -172,6 +172,11 @@ class _ProductoPageState extends State<ProductoPage> {
 
     //Bandera para el guardado de elementos (deshabilitar el boton de guardar)
     setState(() {_guardando = true;});
+
+    //Llamado para subir la imagen al servicio REST.
+    if(foto != null){
+      producto.fotoUrl = await productosProvider.subirImagen(foto);
+    }
 
     //Servicio REST para crear o editar un producto en la DB.
     if(producto.id == null){
