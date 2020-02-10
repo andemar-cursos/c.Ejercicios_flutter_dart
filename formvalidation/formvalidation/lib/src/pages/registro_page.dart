@@ -1,11 +1,18 @@
+//Terceros
 import 'package:flutter/material.dart';
+//Bloc
 import 'package:formvalidation/src/blocs/provider.dart';
+//Providers
+import 'package:formvalidation/src/providers/usuario_provider.dart';
+//Pages
 import 'package:formvalidation/src/pages/home_page.dart';
 import 'package:formvalidation/src/pages/login_page.dart';
 
 class RegistroPage extends StatelessWidget {
 
   static final String routeName = 'RegistroPage';
+
+  final usuarioProvider = new UsuarioProvider();
 
   //Build
   @override
@@ -129,7 +136,7 @@ class RegistroPage extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          Text('Registro', style: TextStyle(fontSize: 20.0),),
+          Text('Crear cuenta', style: TextStyle(fontSize: 20.0),),
           SizedBox(height: 40.0),
           _crearEmail(bloc),
           SizedBox(height: 20.0),
@@ -205,7 +212,7 @@ class RegistroPage extends StatelessWidget {
         return RaisedButton(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-            child: Text('Ingresar'),
+            child: Text('Registrar'),
           ),
           shape: RoundedRectangleBorder(
             //Bordes redondeados del boton
@@ -219,7 +226,7 @@ class RegistroPage extends StatelessWidget {
           textColor: Colors.white,
           //Si hay data del blocfromValidStream, retorna una funcion, si no, null.
           //Si el hay data, significa que el email y el pass, fueron correctos.
-          onPressed: snapshot.hasData? ()=>_login(context, bloc) : null, 
+          onPressed: snapshot.hasData? ()=>_registrar(context, bloc) : null, 
         );  
       },
     );
@@ -236,13 +243,11 @@ class RegistroPage extends StatelessWidget {
 
   //----------FUNCIONES------------//
 
-  _login(BuildContext context, LoginBloc bloc){
+  _registrar(BuildContext context, LoginBloc bloc){
+    
+    usuarioProvider.nuevoUsuario(bloc.email, bloc.pass);
 
-    print('=====================');
-    print("Email: ${bloc.email}");
-    print("Pass: ${bloc.pass}");
-
-    Navigator.pushReplacementNamed(context, HomePage.routeName);
+    //Navigator.pushReplacementNamed(context, HomePage.routeName);
   }
 
 
