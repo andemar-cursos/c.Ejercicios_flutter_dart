@@ -81,7 +81,11 @@ class _ProductoPageState extends State<ProductoPage> {
   //----WIDGET'S DEL BUILD----//
   Widget _mostrarFoto(){
     if(producto.fotoUrl != null){
-      return Container();
+      return FadeInImage(
+        placeholder: AssetImage('assets/img/jar-loading.gif'),
+        image: NetworkImage(producto.fotoUrl),
+        fit: BoxFit.cover
+      );
     }else{
       return Image(
         //Si la imagen tiene data, se guarda la imagen, si no, se pode 'no-image'
@@ -159,7 +163,9 @@ class _ProductoPageState extends State<ProductoPage> {
       source: origen,
     );
     if(foto != null){
-      //Limpieza
+      //Si se selecciona una nueva foto, se vuelve null el fotoUrl, para que no
+      //se muestre.
+      producto.fotoUrl = null;
     }
     setState(() {});
   }
@@ -190,7 +196,7 @@ class _ProductoPageState extends State<ProductoPage> {
     //Este mensaje aparecera, cuando se guarde los datos
     mostrarSnackBar(context, 'Registro guardado');
     //Si despues de guardar/editar, se quiere salir de la pagina
-    //Navigator.pop(context);
+    Navigator.pop(context);
   }
   void mostrarSnackBar(BuildContext context, String mensaje){
 

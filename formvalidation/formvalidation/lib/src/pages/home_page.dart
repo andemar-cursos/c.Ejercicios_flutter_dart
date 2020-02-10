@@ -58,12 +58,26 @@ class HomePage extends StatelessWidget {
         //Llamado al servicio REST
         productosProvider.borrarProducto(producto.id);
       },
-      child: ListTile(
-        title: Text('${producto.titulo} - ${producto.valor}'),
-        subtitle: Text('ID: ${producto.id}'),
-        //Se envia por argumento el producto seleccionado por el usuario.
-        onTap: () => Navigator.pushNamed(context, ProductoPage.routeName, arguments: producto)
-      ),
+      child: Card(
+        child: Column(
+          children: <Widget>[
+            //Si la imagen es null, se pone no-img
+            (producto.fotoUrl == null)
+            ? Image(image: AssetImage('assets/img/no-image.png'))
+            //Si hay, se crea un fade, obteniendola de la url del producto
+            : FadeInImage(
+            placeholder: AssetImage('assets/img/jar-loading.gif'),
+            image: NetworkImage(producto.fotoUrl) 
+            ),
+            
+            ListTile( title: Text('${producto.titulo} - ${producto.valor}'),
+            subtitle: Text('ID: ${producto.id}'),
+            //Se envia por argumento el producto seleccionado por el usuario.
+            onTap: () => Navigator.pushNamed(context, ProductoPage.routeName, arguments: producto)),
+          ],
+        ),
+      )
+        
     );
   }
   
