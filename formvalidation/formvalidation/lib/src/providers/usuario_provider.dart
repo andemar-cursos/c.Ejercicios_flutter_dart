@@ -1,14 +1,17 @@
 //Terceros
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+//Preferencias
+import 'package:formvalidation/src/preferences/preferencias_usuario.dart';
 
 class UsuarioProvider{
 
   //Llave de la cuenta de firebase
   final String _fireKey = 'AIzaSyDejmN8t6wzrEb6bF2hs2lY3knsgfH5w4c';
 
-  
+  //Preferencias del usuario
+  final _prefs = new PreferenciasUsuario();
+
   //--------SERVICIOS REST-------\\
   //Peticion al servicio REST
   Future<Map<String, dynamic>> nuevoUsuario(String email, String pass) async{
@@ -32,7 +35,10 @@ class UsuarioProvider{
 
     //Si contiene la llave idToken, significa que si se creo.
     if(decodedRes.containsKey('idToken')){
-      //TODO: Guardar el token en el storage
+      
+      //Se guarda el token, en el storage de preferencias del usuario
+      _prefs.token = decodedRes['idToken'];
+
       return {'ok': true, 'token': decodedRes['idToken']};
     //Si no, se busca obtiene el mensaje de error y se retorna.
     }else{
@@ -62,7 +68,10 @@ class UsuarioProvider{
 
     //Si contiene la llave idToken, significa que si se creo.
     if(decodedRes.containsKey('idToken')){
-      //TODO: Guardar el token en el storage
+      
+      //Se guarda el token, en el storage de preferencias del usuario
+      _prefs.token = decodedRes['idToken'];
+
       return {'ok': true, 'token': decodedRes['idToken']};
     //Si no, se busca obtiene el mensaje de error y se retorna.
     }else{

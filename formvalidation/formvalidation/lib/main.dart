@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 //blocs
 import 'package:formvalidation/src/blocs/provider.dart';
+//Preferencias
+import 'package:formvalidation/src/preferences/preferencias_usuario.dart';
 //Pages
 import 'package:formvalidation/src/pages/home_page.dart';
 import 'package:formvalidation/src/pages/login_page.dart';
@@ -9,7 +11,14 @@ import 'package:formvalidation/src/pages/registro_page.dart';
 import 'src/pages/home_page.dart';
 import 'src/pages/producto_page.dart';
  
-void main() => runApp(MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = new PreferenciasUsuario();
+  await prefs.initPrefs();
+
+  runApp(MyApp());
+} 
  
 class MyApp extends StatelessWidget {
   @override
