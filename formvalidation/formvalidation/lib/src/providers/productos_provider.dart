@@ -52,7 +52,7 @@ class ProductosProvider{
 
 
   Future<List<ProductoModel>> cargarProducos() async{
-    //Url dele endpoint
+    //Url del endpoint
     final url   = '$_url/productos.json?auth=${_prefs.token}';
     //Esta es la respuesta del servidor
     final resp  = await http.get(url);
