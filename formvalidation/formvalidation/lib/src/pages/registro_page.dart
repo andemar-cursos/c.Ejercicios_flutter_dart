@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:formvalidation/src/blocs/provider.dart';
 import 'package:formvalidation/src/pages/home_page.dart';
-import 'package:formvalidation/src/pages/registro_page.dart';
+import 'package:formvalidation/src/pages/login_page.dart';
 
-class LoginPage extends StatelessWidget {
+class RegistroPage extends StatelessWidget {
 
-  static final String routeName = 'LoginPage';
+  static final String routeName = 'RegistroPage';
 
   //Build
   @override
@@ -95,7 +95,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           _cajaLogin(size, bloc),
-          _crearBotonRegistro(context),
+          _crearBotonLogin(context),
           //Esto permite que la caja no quede pegada en la esquina, cuando la pantalla esta en horizontal
           SizedBox(height: 100.0),
         ],
@@ -129,7 +129,7 @@ class LoginPage extends StatelessWidget {
       ),
       child: Column(
         children: <Widget>[
-          Text('Ingreso', style: TextStyle(fontSize: 20.0),),
+          Text('Registro', style: TextStyle(fontSize: 20.0),),
           SizedBox(height: 40.0),
           _crearEmail(bloc),
           SizedBox(height: 20.0),
@@ -224,11 +224,11 @@ class LoginPage extends StatelessWidget {
       },
     );
   }
-  Widget _crearBotonRegistro(BuildContext context){
+  Widget _crearBotonLogin(BuildContext context){
 
     return FlatButton(
-      onPressed: () => Navigator.pushReplacementNamed(context, RegistroPage.routeName),
-      child: Text('Crear una nueva cuenta'),
+      onPressed: () => Navigator.pushReplacementNamed(context, LoginPage.routeName),
+      child: Text('¿Ya tienes cuenta?'),
     );
   }
   //----
