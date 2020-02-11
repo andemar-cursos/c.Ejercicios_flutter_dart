@@ -93,11 +93,11 @@ class _ProductoPageState extends State<ProductoPage> {
         fit: BoxFit.cover
       );
     }else{
-      return Image(
-        //Si la imagen tiene data, se guarda la imagen, si no, se pode 'no-image'
-        image: AssetImage( foto?.path ?? 'assets/img/no-image.png'),
-        height: 300,
-        fit: BoxFit.cover
+      return Container(
+        child: Center(
+          //Se corrigio esta linea. si hay foto, entonces se envia un Image.file, si no, el asset de no-image.
+          child: foto == null?AssetImage('assets/img/no-image.png'):new Image.file(foto),
+        ),
       );
     }
   }
