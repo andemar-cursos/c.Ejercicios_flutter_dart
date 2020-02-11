@@ -18,7 +18,39 @@ class PushNotificationProvider{
     //coWDVnzy7Q4:APA91bEqYa76Yq6vH7ZA8oOCGc_oTDEFbYsWw7xOK5VDQyhgPTKHr8-JF7QZtjTGfmnfdkC-t9f1YO3RlraELC9_bDw664sNvLZ20TpRSoGP00p4vlpEVPkq8BDqcc7lPlu5f8e1JYXu
 
    });
+
+   _firebaseMessaging.configure(
+     
+      onMessage: (info){
+        print('==== OnMesage ====');
+
+        print(info);
+      },
+
+      onLaunch: (info){
+        print('==== OnLaunch ====');
+
+        print(info);
+      },
+    
+      onResume: (info){
+        print('==== OnResume ====');
+
+        print(info);
+
+        print(info['data']['comida']);
+      },
+
+     
+
+   );
+
+
  }
+
+
+
+ 
 
 
 
