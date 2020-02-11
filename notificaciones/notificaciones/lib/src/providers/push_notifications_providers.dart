@@ -1,10 +1,15 @@
 //Terceros
+import 'dart:async';
+import 'dart:io';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationProvider{
 
- FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
+  final _mensajesStreamController = StreamController<String>.broadcast();
+  Stream<String> get mensajes => _mensajesStreamController.stream;
 
  initNotificaciones(){
 
@@ -23,8 +28,16 @@ class PushNotificationProvider{
      
       onMessage: (info){
         print('==== OnMesage ====');
-
         print(info);
+
+        String data = 'no-data';
+
+        if(Platform.isAndroid){
+          //Si hay datos en info, se guardan, si no. sigue data igual.
+          data = info['data']['comida'] ?? data;
+        }
+
+        _mensajesStreamController.sink.add(data);
       },
 
       onLaunch: (info){
@@ -34,11 +47,17 @@ class PushNotificationProvider{
       },
     
       onResume: (info){
-        print('==== OnResume ====');
-
+        print('==== OnMesage ====');
         print(info);
 
-        print(info['data']['comida']);
+        String data = 'no-data';
+
+        if(Platform.isAndroid){
+          //Si hay datos en info, se guardan, si no. sigue data igual.
+          data = info['data']['comida'] ?? data;
+        }
+
+        _mensajesStreamController.sink.add(data);
       },
 
      
@@ -49,7 +68,9 @@ class PushNotificationProvider{
  }
 
 
-
+  dispose(){
+    _mensajesStreamController?.close();
+  }
  
 
 
