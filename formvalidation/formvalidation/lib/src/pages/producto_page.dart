@@ -1,12 +1,12 @@
 //Terceros
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:formvalidation/src/blocs/productos_bloc.dart';
+import 'package:formvalidation/src/blocs/provider.dart';
 import 'package:image_picker/image_picker.dart';
+//Bloc
+import 'package:formvalidation/src/blocs/productos_bloc.dart';
 //Model
 import 'package:formvalidation/src/models/producto_model.dart';
-import 'package:formvalidation/src/providers/productos_provider.dart';
 //Utilidades
 import 'package:formvalidation/src/utils/utils.dart' as utils;
 
@@ -24,8 +24,10 @@ class _ProductoPageState extends State<ProductoPage> {
   final  formKey = GlobalKey<FormState>();
   //Esta es la llave que 'amarra' al scaffold
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  //Se hace la instancia con los metodos REST
-  final  productosProvider = ProductosProvider();
+
+  //Creacion de la variable.
+  ProductosBloc productosBloc;
+
   //Intancia file para la foto a subir/actualizar
   File foto;
 
@@ -36,6 +38,9 @@ class _ProductoPageState extends State<ProductoPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    //Se instancia desde provider, ya que se usa el singleton
+    productosBloc = Provider.productosBloc(context);
 
     //Se obtienen los argumentos, si se enviaron.
     final ProductoModel prodArg = ModalRoute.of(context).settings.arguments;
@@ -182,14 +187,14 @@ class _ProductoPageState extends State<ProductoPage> {
 
     //Llamado para subir la imagen al servicio REST.
     if(foto != null){
-      producto.fotoUrl = await productosProvider.subirImagen(foto);
+      producto.fotoUrl = await productosBloc.subirFoto(foto);
     }
 
     //Servicio REST para crear o editar un producto en la DB.
     if(producto.id == null){
-      productosProvider.crearProducto(producto);
+      productosBloc.agregarProducto(producto);
     } else
-      productosProvider.editarProducto(producto);
+      productosBloc.editarProducto(producto);
     
     //Bandera para el guardado de elementos (deshabilitar el boton de guardar)
     setState(() {_guardando = false;});
@@ -199,7 +204,6 @@ class _ProductoPageState extends State<ProductoPage> {
     //Si despues de guardar/editar, se quiere salir de la pagina
 
     //Esto 'refresca' el listado de home.
-    final productosBloc = new ProductosBloc();
     productosBloc.cargarProductos();
 
     Navigator.pop(context);
