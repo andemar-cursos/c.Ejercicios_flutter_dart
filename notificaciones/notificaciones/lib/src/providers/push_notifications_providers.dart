@@ -26,7 +26,7 @@ class PushNotificationProvider{
 
    _firebaseMessaging.configure(
      
-      onMessage: (info){
+      onMessage: (info) async{
         print('==== OnMesage ====');
         print(info);
 
@@ -40,13 +40,13 @@ class PushNotificationProvider{
         _mensajesStreamController.sink.add(data);
       },
 
-      onLaunch: (info){
+      onLaunch: (info) async{
         print('==== OnLaunch ====');
 
         print(info);
       },
     
-      onResume: (info){
+      onResume: (info) async{
         print('==== OnMesage ====');
         print(info);
 
