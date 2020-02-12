@@ -16,12 +16,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    //Providers
+    //Intancia del provider
     final animeInfo = Provider.of<AnimesInfo>(context);
 
 
     return Scaffold(
       appBar: AppBar(
+        //Se llama la instancia de provider, a su metodo get.
         title: Text(animeInfo.anime),
       ),
       body: Center(

@@ -11,7 +11,9 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Se debe iniciar con este widget, ya que es el que controlara los 'Streams'
     return ChangeNotifierProvider(
+      //Se le pasa el contexto y los providers
       create: (context) => AnimesInfo(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

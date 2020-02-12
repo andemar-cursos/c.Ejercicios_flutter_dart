@@ -8,6 +8,7 @@ class SuperFloatingAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    //Intancia del provider
     final animeInfo = Provider.of<AnimesInfo>(context);
 
     return Column(
@@ -16,6 +17,7 @@ class SuperFloatingAction extends StatelessWidget {
         FloatingActionButton(
           child: Icon(Icons.accessible_forward),
           backgroundColor: Colors.redAccent,
+          //Al lanzar la funcion, se cambia la variable del provider, llamando posterior a la alerta
           onPressed: () => animeInfo.anime = 'Sword art online'
         ),
 
@@ -24,6 +26,7 @@ class SuperFloatingAction extends StatelessWidget {
         FloatingActionButton(
           child: Icon(Icons.directions_run),
           backgroundColor: Colors.blue,
+          //Al lanzar la funcion, se cambia la variable del provider, llamando posterior a la alerta
           onPressed: () => animeInfo.anime = 'Clannad'
         ),
 
