@@ -1,4 +1,5 @@
 //Terceros
+import 'package:beats/src/widgets/card_view_widget.dart';
 import 'package:beats/src/widgets/custom_appbar_widget.dart';
 import 'package:flutter/material.dart';
 //Widgets
@@ -22,6 +23,7 @@ class HomePage extends StatelessWidget {
                 children: <Widget>[
                   CustomAppBar(),
                   _header(),
+                  CardsView(),
                 ],
               ),
             )
